@@ -1,12 +1,12 @@
 import React from "react";
-import { observer } from "mobx-react";
-import { DependencyInjection } from "./base";
-import { IAppStore, IMessageBus, RouteChangeMessage, IPageRenderer, IRouteManager } from "./interfaces";
-import { Link } from "./navigation";
 import "./App.css";
-import spaLogo from "./resources/spa-logo.png";
-import { MessageBusTopics } from "./constants";
+import { observer } from "mobx-react";
 import { Lambda, observe } from "mobx";
+import { DependencyInjection } from "./base";
+import { IAppStore, IMessageBus, RouteChangeMessage, IPageRenderer } from "./interfaces";
+import { MessageBusTopics } from "./constants";
+import { Menu } from "./navigation";
+import { AppLogo } from "./ui";
 
 type AppProps = {
     dependencyInjection: DependencyInjection;
@@ -51,12 +51,10 @@ export class App extends React.Component<AppProps> {
         return (
             <div className="app-container">
                 <div className="app-logo-container">
-                    <img src={spaLogo} />
+                    <AppLogo />
                 </div>
                 <div className="app-menu-container">
-                    <Link text="Home" location="/" />
-                    <Link text="About" location="/about" />
-                    <Link text="Form" location="/form" />
+                    <Menu />
                 </div>
                 <div className="app-page-wrapper">
                     {this.pageRenderer.renderPage(this.store.currentPage.get())}

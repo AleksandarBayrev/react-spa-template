@@ -12,11 +12,11 @@ type LinkProps = {
 
 @observer
 export class Link extends React.Component<LinkProps> {
-    private readonly dependencyInjection: DependencyInjection;
+    private readonly appStore: IAppStore;
 
     constructor(props: LinkProps) {
         super(props);
-        this.dependencyInjection = DependencyInjection.getInstance();
+        this.appStore = DependencyInjection.getInstance().getService<IAppStore>("IAppStore");
     }
 
     render(): React.ReactNode {
@@ -28,14 +28,12 @@ export class Link extends React.Component<LinkProps> {
     }
 
     private goToLocation = () => {
-        const appStore = this.dependencyInjection.getService<IAppStore>("IAppStore");
         runInAction(() => {
-            appStore.setCurrentPage(this.props.location);
+            this.appStore.setCurrentPage(this.props.location);
         });
     }
 
     private getStyles = () => {
-        const store = this.dependencyInjection.getService<IAppStore>("IAppStore");
-        return store.currentPage.get() === this.props.location ? `app-link-anchor app-link-anchor-selected` : `app-link-anchor`;
+        return this.appStore.currentPage.get() === this.props.location ? `app-link-anchor app-link-anchor-selected` : `app-link-anchor`;
     }
 }

@@ -6,3 +6,4 @@ export * from "./IRouteManager";
 export * from "./IMessageBus";
 export * from "./messages";
 export * from "./IUrlParser";
+export * from "./LinkConfiguration";
