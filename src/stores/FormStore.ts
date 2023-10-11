@@ -22,7 +22,7 @@ export class FormStore implements IFormStore {
         this.appStore = appStore;
         this.messageBus = messageBus;
         this.urlParser = urlParser;
-        this.name = observable.box(url.searchParams.get("name") || "");
+        this.name = observable.box(this.urlParser.getUrlParameter(url, "name"));
     }
 
     //#region Base methods

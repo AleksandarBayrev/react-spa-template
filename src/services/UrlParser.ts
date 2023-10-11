@@ -8,8 +8,8 @@ export class UrlParser implements IUrlParser {
         return `${path}${searchParams}`;
     }
 
-    getPath(url: URL) {
-        return url.pathname;
+    getUrlParameter(url: URL, parameter: string): string {
+        return url.searchParams.get(parameter) || "";
     }
 }
 
