@@ -1,0 +1,24 @@
+{
+  "name": "react-spa-template",
+  "version": "1.0.0",
+  "description": "React Single Page Application template with routing",
+  "main": "dist/app.bundle.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleksandarBayrev/react-spa-template.git"
+  },
+  "keywords": [
+    "react",
+    "spa",
+    "template"
+  ],
+  "author": "Aleksandar Bayrev <aleksandarbayrev@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/AleksandarBayrev/react-spa-template/issues"
+  },
+  "homepage": "https://github.com/AleksandarBayrev/react-spa-template#readme"
+}
