@@ -1,11 +1,12 @@
 import { IObservableValue, action, observable, runInAction } from "mobx";
-import { IAppStore, IFormStore, IRouteManager } from "../interfaces";
+import { IAppStore, IFormStore, IMessageBus, IRouteManager, RouteChangeMessage } from "../interfaces";
 import { enhanceClass } from "../base";
+import { MessageBusTopics } from "../constants";
 
 export class FormStore implements IFormStore {
     //#region Private properties
-    private readonly routeManager: IRouteManager;
     private readonly appStore: IAppStore;
+    private readonly messageBus: IMessageBus;
     //#endregion
     //#region Public properties
     @observable
@@ -14,11 +15,11 @@ export class FormStore implements IFormStore {
 
     constructor(
         appStore: IAppStore,
-        routeManager: IRouteManager) {
-            const url = new URL(window.location.href);
-            this.appStore = appStore;
-            this.routeManager = routeManager;
-            this.name = observable.box(url.searchParams.get("name") || "");
+        messageBus: IMessageBus) {
+        const url = new URL(window.location.href);
+        this.appStore = appStore;
+        this.messageBus = messageBus;
+        this.name = observable.box(url.searchParams.get("name") || "");
     }
 
     //#region Base methods
@@ -41,7 +42,12 @@ export class FormStore implements IFormStore {
         } else {
             url.searchParams.delete("name");
         }
-        this.routeManager.updateRoute(url.toString());
+        this.messageBus.publishMessage<RouteChangeMessage>({
+            topic: MessageBusTopics.PAGE_CHANGE,
+            data: {
+                route: url.toString()
+            }
+        });
     }
     //#endregion
 }
