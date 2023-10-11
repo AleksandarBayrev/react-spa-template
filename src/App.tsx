@@ -27,7 +27,9 @@ export class App extends React.Component<AppProps> {
                     <Link text="Home" location="/" />
                     <Link text="About" location="/about" />
                 </div>
-                {this.pageRenderer.renderPage(this.store.currentPage.get())}
+                <div className="app-page-wrapper">
+                    {this.pageRenderer.renderPage(this.store.currentPage.get())}
+                </div>
             </div>
         );
     }
