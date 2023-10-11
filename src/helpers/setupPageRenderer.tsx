@@ -1,8 +1,7 @@
 import React from "react";
 import { DependencyInjection } from "../base";
 import { IPageRenderer } from "../interfaces";
-import { HomePage, AboutPage, PageNotFound } from "../pages";
-import { FormPage } from "../pages/FormPage";
+import { HomePage, AboutPage, PageNotFound, FormPage } from "../pages";
 
 export const setupPageRenderer = () => {
     const pageRenderer = DependencyInjection.getInstance().getService<IPageRenderer>("IPageRenderer");
