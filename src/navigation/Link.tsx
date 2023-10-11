@@ -21,7 +21,7 @@ export class Link extends React.Component<LinkProps> {
     render(): React.ReactNode {
         return (
             <div className="app-link-wrapper">
-                <a onClick={this.goToLocation}>{this.props.text}</a>
+                <a className="app-link-anchor" onClick={this.goToLocation}>{this.props.text}</a>
             </div>
         )
     }

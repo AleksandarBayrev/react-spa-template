@@ -1,4 +1,7 @@
-a:hover {
+.app-link-anchor:hover {
     cursor: pointer;
+    font-weight: bold;
+}
+.app-link-anchor {
     text-decoration: underline;
 }
