@@ -5,3 +5,4 @@ export * from "./IPageRenderer";
 export * from "./IRouteManager";
 export * from "./IMessageBus";
 export * from "./messages";
+export * from "./IUrlParser";

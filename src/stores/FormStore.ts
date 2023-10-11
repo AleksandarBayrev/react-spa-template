@@ -1,5 +1,5 @@
 import { IObservableValue, action, observable, runInAction } from "mobx";
-import { IAppStore, IFormStore, IMessageBus, RouteChangeMessage } from "../interfaces";
+import { IAppStore, IFormStore, IMessageBus, IUrlParser, RouteChangeMessage } from "../interfaces";
 import { enhanceClass } from "../base";
 import { MessageBusTopics } from "../constants";
 
@@ -7,6 +7,7 @@ export class FormStore implements IFormStore {
     //#region Private properties
     private readonly appStore: IAppStore;
     private readonly messageBus: IMessageBus;
+    private readonly urlParser: IUrlParser;
     //#endregion
     //#region Public properties
     @observable
@@ -15,10 +16,12 @@ export class FormStore implements IFormStore {
 
     constructor(
         appStore: IAppStore,
-        messageBus: IMessageBus) {
+        messageBus: IMessageBus,
+        urlParser: IUrlParser) {
         const url = new URL(window.location.href);
         this.appStore = appStore;
         this.messageBus = messageBus;
+        this.urlParser = urlParser;
         this.name = observable.box(url.searchParams.get("name") || "");
     }
 
@@ -45,7 +48,7 @@ export class FormStore implements IFormStore {
         this.messageBus.publishMessage<RouteChangeMessage>({
             topic: MessageBusTopics.PAGE_CHANGE,
             data: {
-                route: url.toString()
+                route: this.urlParser.parseUrl(url)
             }
         });
     }
