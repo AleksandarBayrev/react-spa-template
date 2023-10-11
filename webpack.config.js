@@ -1,7 +1,7 @@
 const path = require('path');
 const WebpackObfuscator = require('webpack-obfuscator');
 const cssRegex = /\.css$/;
-const typescriptRegex = /\.tsx?$/;
+const typescriptRegex = /\.(ts|tsx)?$/;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -29,7 +29,7 @@ const config = {
             unicodeEscapeSequence: true
         }),
         new MiniCssExtractPlugin({
-            filename: isProduction ? 'static/app.bundle.css' : 'static/app.bundle.dev.css',
+            filename: isProduction ? 'app.bundle.css' : 'app.bundle.dev.css',
         }),
     ],
     module: {
@@ -38,9 +38,10 @@ const config = {
                 test: cssRegex,
                 sideEffects: true,
                 use: [
+                    MiniCssExtractPlugin.loader,
                     'style-loader',
                     'css-loader',
-                    MiniCssExtractPlugin.loader
+                    'postcss-loader'
                 ]
             },
             {
