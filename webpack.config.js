@@ -37,9 +37,9 @@ const config = {
             {
                 test: cssRegex,
                 sideEffects: true,
+                include: /src/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'style-loader',
                     'css-loader',
                     'postcss-loader'
                 ]
