@@ -18,6 +18,13 @@ export class AppStore implements IAppStore {
         this.currentPage = observable.box(url.pathname);
     }
 
+    //#region Base methods
+    async load(): Promise<void> {
+    }
+    async unload(): Promise<void> {
+    }
+    //#endregion
+
     //#region Actions
     @action
     setCurrentPage = (page: string) => {

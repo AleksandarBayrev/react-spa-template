@@ -4,6 +4,7 @@ import { DependencyInjection } from "./base";
 import { IAppStore } from "./interfaces";
 import { IPageRenderer } from "./interfaces/IPageRenderer";
 import { Link } from "./navigation";
+import "./App.css";
 
 type AppProps = {
     dependencyInjection: DependencyInjection;
@@ -26,6 +27,7 @@ export class App extends React.Component<AppProps> {
                 <div className="app-menu-container">
                     <Link text="Home" location="/" />
                     <Link text="About" location="/about" />
+                    <Link text="Form" location="/form" />
                 </div>
                 <div className="app-page-wrapper">
                     {this.pageRenderer.renderPage(this.store.currentPage.get())}
