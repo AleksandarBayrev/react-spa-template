@@ -18,7 +18,7 @@ export class PageNotFound extends React.Component<PageNotFoundProps> {
     render(): React.ReactNode {
         return (
             <div className="app-page-home">
-                Link {} to page not found!
+                Link {this.store.currentPage.get()} to page not found!
             </div>
         )
     }
