@@ -2,6 +2,7 @@ const path = require('path');
 const WebpackObfuscator = require('webpack-obfuscator');
 const cssRegex = /\.css$/;
 const typescriptRegex = /\.(ts|tsx)?$/;
+const imagesRegex = [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/];
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -48,7 +49,11 @@ const config = {
                 test: typescriptRegex,
                 use: 'ts-loader',
                 exclude: /node_modules/,
-            }
+            },
+            {
+              test: imagesRegex,
+              type: 'asset',
+            },
         ],
     },
     resolve: {

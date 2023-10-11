@@ -5,6 +5,7 @@ import { IAppStore } from "./interfaces";
 import { IPageRenderer } from "./interfaces/IPageRenderer";
 import { Link } from "./navigation";
 import "./App.css";
+import spaLogo from "./resources/spa-logo.png";
 
 type AppProps = {
     dependencyInjection: DependencyInjection;
@@ -24,6 +25,9 @@ export class App extends React.Component<AppProps> {
     render() {
         return (
             <div className="app-container">
+                <div className="app-logo-container">
+                    <img src={spaLogo} />
+                </div>
                 <div className="app-menu-container">
                     <Link text="Home" location="/" />
                     <Link text="About" location="/about" />
