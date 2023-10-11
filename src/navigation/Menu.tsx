@@ -21,7 +21,7 @@ export class Menu extends React.Component {
     render() {
         return (
             <div className="app-menu-wrapper">
-                {this.links.map(link => <Link text={link.text} location={link.location} />)}
+                {this.links.map((link, index) => <Link key={`${link.text}-${link.location}-${index}`} text={link.text} location={link.location} />)}
             </div>
         )
     }
