@@ -1,6 +1,11 @@
 .app-link-anchor:hover {
     cursor: pointer;
     font-weight: bold;
+    font-style: italic;
+}
+.app-link-anchor-selected {
+    font-weight: bold;
+    text-decoration: underline;
 }
 .app-link-anchor {
     text-decoration: underline;

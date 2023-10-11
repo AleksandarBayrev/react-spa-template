@@ -21,7 +21,7 @@ export class Link extends React.Component<LinkProps> {
     render(): React.ReactNode {
         return (
             <div className="app-link-wrapper">
-                <a className="app-link-anchor" onClick={this.goToLocation}>{this.props.text}</a>
+                <a className={this.getStyles()} onClick={this.goToLocation}>{this.props.text}</a>
             </div>
         )
     }
@@ -29,5 +29,10 @@ export class Link extends React.Component<LinkProps> {
     private goToLocation = () => {
         const appStore = this.dependencyInjection.getService<IAppStore>("IAppStore");
         appStore.setCurrentPage(this.props.location);
+    }
+
+    private getStyles = () => {
+        const store = this.dependencyInjection.getService<IAppStore>("IAppStore");
+        return store.currentPage.get() === this.props.location ? `app-link-anchor app-link-anchor-selected` : `app-link-anchor`;
     }
 }
