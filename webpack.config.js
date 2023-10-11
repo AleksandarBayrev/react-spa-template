@@ -51,7 +51,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.css'],
+        extensions: ['.tsx', '.ts', '.css', '.js', '.jsx'],
     }
 };
 
