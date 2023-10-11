@@ -2,6 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { DependencyInjection } from "../base";
 import { IAppStore } from "../interfaces";
+import "./Link.css";
 
 type LinkProps = {
     location: string;

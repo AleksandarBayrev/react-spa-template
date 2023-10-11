@@ -1,13 +1,13 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
+const fs = require('fs');
 const path = require('path');
 const WebpackObfuscator = require('webpack-obfuscator');
+const cssRegex = /\.css$/;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-
 const config = {
-    entry: './build/index.js',
+    entry: ['./src/index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: isProduction ? 'app.bundle.js' : 'app.bundle.dev.js'
@@ -28,10 +28,31 @@ const config = {
             target: 'browser',
             unicodeEscapeSequence: true
         }),
+        new MiniCssExtractPlugin({
+            filename: 'app.bundle.css',
+        }),
     ],
     module: {
-        rules: [],
+        rules: [
+            {
+                test: cssRegex,
+                sideEffects: true,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+              test: /\.tsx?$/,
+              use: 'ts-loader',
+              exclude: /node_modules/,
+            }
+        ],
     },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.css'],
+    }
 };
 
 module.exports = () => {

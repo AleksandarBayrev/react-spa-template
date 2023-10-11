@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { DependencyInjection } from "./base";
 import { IAppStore } from "./interfaces";
 import { IPageRenderer } from "./interfaces/IPageRenderer";
-import { Link } from "./navigation/Link";
+import { Link } from "./navigation";
 
 type AppProps = {
     dependencyInjection: DependencyInjection;
