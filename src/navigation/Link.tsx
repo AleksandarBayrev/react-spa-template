@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { runInAction } from "mobx";
 import { DependencyInjection } from "../base";
 import { IAppStore } from "../interfaces";
 import "./Link.css";
@@ -28,7 +29,9 @@ export class Link extends React.Component<LinkProps> {
 
     private goToLocation = () => {
         const appStore = this.dependencyInjection.getService<IAppStore>("IAppStore");
-        appStore.setCurrentPage(this.props.location);
+        runInAction(() => {
+            appStore.setCurrentPage(this.props.location);
+        });
     }
 
     private getStyles = () => {

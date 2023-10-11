@@ -1,4 +1,4 @@
-import { IObservableValue, action, observable } from "mobx";
+import { IObservableValue, action, observable, runInAction } from "mobx";
 import { IAppStore, IFormStore, IRouteManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
@@ -25,7 +25,9 @@ export class FormStore implements IFormStore {
     async load(): Promise<void> {
     }
     async unload(): Promise<void> {
-        this.name.set("");
+        runInAction(() => {
+            this.name.set("");
+        });
     }
     //#endregion
 
