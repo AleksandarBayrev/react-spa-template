@@ -1,7 +1,7 @@
-const fs = require('fs');
 const path = require('path');
 const WebpackObfuscator = require('webpack-obfuscator');
 const cssRegex = /\.css$/;
+const typescriptRegex = /\.tsx?$/;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -38,15 +38,15 @@ const config = {
                 test: cssRegex,
                 sideEffects: true,
                 use: [
-                    MiniCssExtractPlugin.loader,
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
+                    MiniCssExtractPlugin.loader
                 ]
             },
             {
-              test: /\.tsx?$/,
-              use: 'ts-loader',
-              exclude: /node_modules/,
+                test: typescriptRegex,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             }
         ],
     },
