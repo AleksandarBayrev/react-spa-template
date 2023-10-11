@@ -1,5 +1,5 @@
 import { IObservableValue, action, observable, runInAction } from "mobx";
-import { IAppStore, IFormStore, IMessageBus, IRouteManager, RouteChangeMessage } from "../interfaces";
+import { IAppStore, IFormStore, IMessageBus, RouteChangeMessage } from "../interfaces";
 import { enhanceClass } from "../base";
 import { MessageBusTopics } from "../constants";
 

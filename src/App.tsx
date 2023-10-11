@@ -6,7 +6,7 @@ import { Link } from "./navigation";
 import "./App.css";
 import spaLogo from "./resources/spa-logo.png";
 import { MessageBusTopics } from "./constants";
-import { observe } from "mobx";
+import { Lambda, observe } from "mobx";
 
 type AppProps = {
     dependencyInjection: DependencyInjection;
@@ -17,21 +17,17 @@ export class App extends React.Component<AppProps> {
     private readonly store: IAppStore;
     private readonly pageRenderer: IPageRenderer;
     private readonly messageBus: IMessageBus;
-    private readonly routeManager: IRouteManager;
+    private currentPageObserver!: Lambda | undefined;
 
     constructor(props: AppProps) {
         super(props);
-        this.routeManager = props.dependencyInjection.getService<IRouteManager>("IRouteManager");
         this.store = props.dependencyInjection.getService<IAppStore>("IAppStore");
         this.pageRenderer = props.dependencyInjection.getService<IPageRenderer>("IPageRenderer");
         this.messageBus = props.dependencyInjection.getService<IMessageBus>("IMessageBus");
-        this.messageBus.subscribe<RouteChangeMessage>(MessageBusTopics.PAGE_CHANGE, (message) => {
-            this.routeManager.updateRoute(message.data.route);
-        });
     }
 
     async componentDidMount() {
-        observe(this.store.currentPage, async (change) => {
+        this.currentPageObserver = observe(this.store.currentPage, async (change) => {
             await this.messageBus.publishMessage<RouteChangeMessage>({
                 topic: MessageBusTopics.PAGE_CHANGE,
                 data: {
@@ -39,6 +35,12 @@ export class App extends React.Component<AppProps> {
                 }
             });
         });
+    }
+
+    async componentWillUnmount() {
+        if (this.currentPageObserver) {
+            this.currentPageObserver();
+        }
     }
 
     render() {

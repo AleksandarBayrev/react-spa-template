@@ -1,3 +1,4 @@
+import { enhanceClass } from "../base";
 import { IMessageBus, Message, MessageBusCallback } from "../interfaces";
 
 export class MessageBus implements IMessageBus {
@@ -45,3 +46,5 @@ export class MessageBus implements IMessageBus {
         }
     }
 }
+
+enhanceClass(MessageBus, "MessageBus");

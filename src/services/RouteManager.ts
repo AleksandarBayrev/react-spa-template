@@ -1,3 +1,4 @@
+import { enhanceClass } from "../base";
 import { IRouteManager } from "../interfaces";
 
 export class RouteManager implements IRouteManager {
@@ -5,3 +6,5 @@ export class RouteManager implements IRouteManager {
         window.history.replaceState([], "", route);
     }
 }
+
+enhanceClass(RouteManager, "RouteManager");
