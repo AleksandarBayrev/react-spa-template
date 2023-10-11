@@ -18,6 +18,7 @@ export class App extends React.Component<AppProps> {
     private readonly pageRenderer: IPageRenderer;
     private readonly messageBus: IMessageBus;
     private currentPageObserver!: Lambda | undefined;
+    private currentFullUrlObserver!: Lambda | undefined;
 
     constructor(props: AppProps) {
         super(props);
@@ -40,6 +41,9 @@ export class App extends React.Component<AppProps> {
     async componentWillUnmount() {
         if (this.currentPageObserver) {
             this.currentPageObserver();
+        }
+        if (this.currentFullUrlObserver) {
+            this.currentFullUrlObserver();
         }
     }
 

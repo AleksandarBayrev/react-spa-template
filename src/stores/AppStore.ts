@@ -6,11 +6,15 @@ export class AppStore implements IAppStore {
     //#region Public properties
     @observable
     currentPage: IObservableValue<string>;
+
+    @observable
+    currentFullUrl: IObservableValue<string>;
     //#endregion
 
     constructor() {
         const url = new URL(window.location.href);
         this.currentPage = observable.box(url.pathname);
+        this.currentFullUrl = observable.box(url.toString());
     }
 
     //#region Base methods
@@ -24,6 +28,11 @@ export class AppStore implements IAppStore {
     @action
     setCurrentPage = (page: string) => {
         this.currentPage.set(page);
+    }
+    @action
+    updateCurrentFullUrl = (): void => {
+        const url = new URL(window.location.href);
+        this.currentFullUrl.set(url.toString());
     }
     //#endregion
 }
