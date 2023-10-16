@@ -18,15 +18,18 @@ export class FormStore implements IFormStore {
         appStore: IAppStore,
         messageBus: IMessageBus,
         urlParser: IUrlParser) {
-        const url = new URL(window.location.href);
         this.appStore = appStore;
         this.messageBus = messageBus;
         this.urlParser = urlParser;
-        this.name = observable.box(this.urlParser.getUrlParameter(url, "name"));
+        this.name = observable.box("");
     }
 
     //#region Base methods
     async load(): Promise<void> {
+        const url = new URL(window.location.href);
+        runInAction(() => {
+            this.setName(this.urlParser.getUrlParameter(url, "name"));
+        });
     }
     async unload(): Promise<void> {
         runInAction(() => {
