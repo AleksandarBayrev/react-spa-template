@@ -1,7 +1,7 @@
-import { IObservableValue, action, observable, runInAction } from "mobx";
+import { IObservableValue, observable, runInAction } from "mobx";
 import { IAppStore, IFormStore, IMessageBus, IUrlParser, RouteChangeMessage } from "../interfaces";
 import { enhanceClass } from "../base";
-import { MessageBusTopics } from "../constants";
+import { MessageBusTopics, Routes } from "../constants";
 
 export class FormStore implements IFormStore {
     //#region Private properties
@@ -27,32 +27,34 @@ export class FormStore implements IFormStore {
     //#region Base methods
     async load(): Promise<void> {
         const url = new URL(window.location.href);
-        runInAction(() => {
-            this.setName(this.urlParser.getUrlParameter(url, "name"));
-        });
+        this.setName(this.urlParser.getUrlParameter(url, "name"));
     }
     async unload(): Promise<void> {
-        runInAction(() => {
-            this.name.set("");
-        });
+        const url = new URL(window.location.href);
+        if (url.pathname.includes(Routes["/form"])) {
+            this.setName(this.urlParser.getUrlParameter(url, "name"));
+        } else {
+            this.setName("");
+        }
     }
     //#endregion
 
     //#region Actions
-    @action
     setName = (name: string): void => {
-        const url = new URL(`${window.location.origin}${this.appStore.currentPage.get()}`);
-        this.name.set(name);
-        if (name) {
-            url.searchParams.set("name", name);
-        } else {
-            url.searchParams.delete("name");
-        }
-        this.messageBus.publishMessage<RouteChangeMessage>({
-            topic: MessageBusTopics.PAGE_CHANGE,
-            data: {
-                route: this.urlParser.parseUrl(url)
+        runInAction(() => {
+            const url = new URL(`${window.location.origin}${this.appStore.currentPage.get()}`);
+            this.name.set(name);
+            if (name) {
+                url.searchParams.set("name", name);
+            } else {
+                url.searchParams.delete("name");
             }
+            this.messageBus.publishMessage<RouteChangeMessage>({
+                topic: MessageBusTopics.PAGE_CHANGE,
+                data: {
+                    route: this.urlParser.parseUrl(url)
+                }
+            });
         });
     }
     //#endregion

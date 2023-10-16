@@ -2,7 +2,6 @@ import React from "react";
 import { DependencyInjection } from "../../base";
 import { IAppStore, IFormStore } from "../../interfaces";
 import { observer } from "mobx-react";
-import { runInAction } from "mobx";
 
 type FormPageProps = {
     dependencyInjection: DependencyInjection;
@@ -33,5 +32,5 @@ export class FormPage extends React.Component<FormPageProps> {
         )
     }
 
-    private onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => runInAction(() => this.formStore.setName(e.target.value));
+    private onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => this.formStore.setName(e.target.value);
 }

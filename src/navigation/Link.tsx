@@ -1,6 +1,5 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { runInAction } from "mobx";
 import { DependencyInjection } from "../base";
 import { IAppStore } from "../interfaces";
 import "./Link.css";
@@ -28,9 +27,7 @@ export class Link extends React.Component<LinkProps> {
     }
 
     private goToLocation = () => {
-        runInAction(() => {
-            this.appStore.setCurrentPage(this.props.location);
-        });
+        this.appStore.setCurrentPage(this.props.location);
     }
 
     private getStyles = () => {

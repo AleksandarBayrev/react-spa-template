@@ -1,4 +1,4 @@
-import { IObservableValue, action, observable } from "mobx";
+import { IObservableValue, observable, runInAction } from "mobx";
 import { IAppStore } from "../interfaces";
 import { enhanceClass } from "../base";
 
@@ -25,14 +25,16 @@ export class AppStore implements IAppStore {
     //#endregion
 
     //#region Actions
-    @action
     setCurrentPage = (page: string) => {
-        this.currentPage.set(page);
+        runInAction(() => {
+            this.currentPage.set(page);
+        });
     }
-    @action
     updateCurrentFullUrl = (): void => {
-        const url = new URL(window.location.href);
-        this.currentFullUrl.set(url.toString());
+        runInAction(() => {
+            const url = new URL(window.location.href);
+            this.currentFullUrl.set(url.toString());
+        });
     }
     //#endregion
 }
