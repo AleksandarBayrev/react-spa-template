@@ -15,11 +15,17 @@ export class PageNotFound extends React.Component<PageNotFoundProps> {
         super(props);
         this.store = props.dependencyInjection.getService<IAppStore>("IAppStore");
     }
+
     render(): React.ReactNode {
         return (
             <div className="app-page-not-found">
-                Path {this.store.currentPage.get()} to page not found!
+                Path {this.requestedPath} to page not found!
             </div>
         )
+    }
+
+    private get requestedPath() {
+        const uri = new URL(this.store.currentFullUrl.get());
+        return decodeURIComponent(uri.searchParams.get("requestedRoute") ?? "");
     }
 }
