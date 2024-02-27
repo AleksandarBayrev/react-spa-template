@@ -1,16 +1,24 @@
 import React from "react";
-import { DependencyInjection } from "../../base";
 import { IAppStore, IFormStore } from "../../interfaces";
 import { observer } from "mobx-react";
-
-type FormPageProps = {
-    dependencyInjection: DependencyInjection;
-}
+import { AppContext } from "../../AppContext";
 
 @observer
-export class FormPage extends React.Component<FormPageProps> {
-    private readonly formStore: IFormStore = this.props.dependencyInjection.getService<IFormStore>("IFormStore");
-    private readonly appStore: IAppStore = this.props.dependencyInjection.getService<IAppStore>("IAppStore");
+export class FormPage extends React.Component {
+    private get appStore(): IAppStore {
+        if (!this.context) {
+            throw new Error("AppContext not provided!");
+        }
+        return (this.context as AppContext).dependencyInjection.getService<IAppStore>("IAppStore");
+    }
+
+    private get formStore(): IFormStore {
+        if (!this.context) {
+            throw new Error("AppContext not provided!");
+        }
+        return (this.context as AppContext).dependencyInjection.getService<IFormStore>("IFormStore");
+    }
+
     async componentDidMount(): Promise<void> {
         await this.appStore.load();
         await this.formStore.load();
@@ -21,7 +29,7 @@ export class FormPage extends React.Component<FormPageProps> {
     }
     render(): React.ReactNode {
         return (
-            <div className="app-page-form">
+            <div className="app-page app-page-form">
                 <form>
                     <div className="form-element-wrapper">
                         <div className="form-label">Name: </div>
@@ -34,3 +42,5 @@ export class FormPage extends React.Component<FormPageProps> {
 
     private onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => this.formStore.setName(e.target.value);
 }
+
+FormPage.contextType = AppContext;

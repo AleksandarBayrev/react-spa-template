@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { DependencyInjection } from "./base";
 import { setupDependencyInjection } from "./helpers";
+import { AppContext } from "./AppContext";
 
 (async () => {
     const root = ReactDOM.createRoot(
@@ -13,7 +14,9 @@ import { setupDependencyInjection } from "./helpers";
 
     root.render(
         <React.StrictMode>
-            <App dependencyInjection={DependencyInjection.getInstance()} />
+            <AppContext.Provider value={{dependencyInjection: DependencyInjection.getInstance()}}>
+                <App />
+            </AppContext.Provider>
         </React.StrictMode>
     );
 })();

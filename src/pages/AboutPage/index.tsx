@@ -1,13 +1,14 @@
 import React from "react";
-import { DependencyInjection } from "../../base";
 import { IAppStore } from "../../interfaces";
+import { AppContext } from "../../AppContext";
 
-type AboutPageProps = {
-    dependencyInjection: DependencyInjection;
-}
-
-export class AboutPage extends React.Component<AboutPageProps> {
-    private readonly appStore: IAppStore = this.props.dependencyInjection.getService<IAppStore>("IAppStore");
+export class AboutPage extends React.Component {
+    private get appStore(): IAppStore {
+        if (!this.context) {
+            throw new Error("AppContext not provided!");
+        }
+        return (this.context as AppContext).dependencyInjection.getService<IAppStore>("IAppStore");
+    }
 
     async componentDidMount(): Promise<void> {
         await this.appStore.load();
@@ -19,9 +20,11 @@ export class AboutPage extends React.Component<AboutPageProps> {
 
     render(): React.ReactNode {
         return (
-            <div className="app-page-about">
+            <div className="app-page app-page-about">
                 About me - React Single Page Application template with routing
             </div>
         )
     }
 }
+
+AboutPage.contextType = AppContext;

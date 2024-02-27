@@ -4,8 +4,8 @@ import spaLogo from "../resources/spa-logo.png";
 export class AppLogo extends React.Component {
     render() {
         return (
-            <div>
-                <img src={spaLogo} />
+            <div className="app-logo-wrapper">
+                <img src={spaLogo} className="app-logo"/>
             </div>
         )
     }
