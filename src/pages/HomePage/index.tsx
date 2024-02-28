@@ -1,8 +1,9 @@
 import React from "react";
 import { IAppStore } from "../../interfaces";
 import { AppContext } from "../../AppContext";
+import { BasePage } from "../../base";
 
-export class HomePage extends React.Component {
+export class HomePage extends BasePage {
     private get appStore(): IAppStore {
         if (!this.context) {
             throw new Error("AppContext not provided!");
@@ -26,5 +27,3 @@ export class HomePage extends React.Component {
         )
     }
 }
-
-HomePage.contextType = AppContext;

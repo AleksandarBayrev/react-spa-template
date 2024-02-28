@@ -2,9 +2,10 @@ import React from "react";
 import { IAppStore } from "../../interfaces";
 import { observer } from "mobx-react";
 import { AppContext } from "../../AppContext";
+import { BasePage } from "../../base";
 
 @observer
-export class PageNotFound extends React.Component {
+export class PageNotFound extends BasePage {
     private get store(): IAppStore {
         if (!this.context) {
             throw new Error("AppContext not provided!");
@@ -33,5 +34,3 @@ export class PageNotFound extends React.Component {
         return decodeURIComponent(uri.searchParams.get("requestedRoute") ?? "");
     }
 }
-
-PageNotFound.contextType = AppContext;

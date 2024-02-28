@@ -2,9 +2,10 @@ import React from "react";
 import { IAppStore, IFormStore } from "../../interfaces";
 import { observer } from "mobx-react";
 import { AppContext } from "../../AppContext";
+import { BasePage } from "../../base";
 
 @observer
-export class FormPage extends React.Component {
+export class FormPage extends BasePage {
     private get appStore(): IAppStore {
         if (!this.context) {
             throw new Error("AppContext not provided!");
@@ -42,5 +43,3 @@ export class FormPage extends React.Component {
 
     private onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => this.formStore.setName(e.target.value);
 }
-
-FormPage.contextType = AppContext;
