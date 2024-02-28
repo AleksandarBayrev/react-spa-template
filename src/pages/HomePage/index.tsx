@@ -2,7 +2,9 @@ import React from "react";
 import { IAppStore } from "../../interfaces";
 import { AppContext } from "../../AppContext";
 import { BasePage } from "../../base";
+import { observer } from "mobx-react";
 
+@observer
 export class HomePage extends BasePage {
     private get appStore(): IAppStore {
         if (!this.context) {
