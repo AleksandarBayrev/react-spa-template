@@ -8,7 +8,7 @@ import { setupPageRenderer } from "./setupPageRenderer";
 import { setupMessageBus } from "./setupMessageBus";
 
 export const setupDependencyInjection = async () => {
-    DependencyInjection.setupInstance(console.log);
+    DependencyInjection.setupInstance(console.log, false);
     DependencyInjection.getInstance().registerService<IMessageBus>("IMessageBus", "singleton", MessageBus, []);
     DependencyInjection.getInstance().registerService<IUrlParser>("IUrlParser", "singleton", UrlParser, []);
     DependencyInjection.getInstance().registerService<IRouteManager>("IRouteManager", "singleton", RouteManager, []);
