@@ -47,7 +47,7 @@ export class DependencyInjection {
             classDefinition,
             constructorParameters
         });
-        this.logger(`Registering ${baseType} for ${this.serviceDescriptors.get(baseType)?.classDefinition.className} class`);
+        this.logger(`Registering ${baseType} for ${this.serviceDescriptors.get(baseType)!.classDefinition.className} class`);
         this.services.set(baseType,
             new classDefinition(...constructorParameters));
     }
