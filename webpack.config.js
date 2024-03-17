@@ -9,6 +9,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 const config = {
     entry: ['./src/index.tsx'],
+    target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist', 'static'),
         filename: isProduction ? 'app.bundle.js' : 'app.bundle.dev.js'
