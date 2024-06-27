@@ -14,11 +14,9 @@ export class AboutPage extends BasePage {
     }
 
     async componentDidMount(): Promise<void> {
-        await this.appStore.load();
     }
 
     async componentWillUnmount(): Promise<void> {
-        await this.appStore.unload();
     }
 
     render(): React.ReactNode {

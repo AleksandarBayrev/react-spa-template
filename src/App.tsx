@@ -31,23 +31,20 @@ export class App extends React.Component {
         return (this.context as AppContext).dependencyInjection.getService<IMessageBus>("IMessageBus");
     };
 
-    private currentPageObserver!: Lambda | undefined;
-
     async componentDidMount() {
-        this.currentPageObserver = observe(this.store.currentPage, async (change) => {
+        await this.store.load();
+        this.store.lambdaObservers.push(observe(this.store.currentPage, async (change) => {
             await this.messageBus.publishMessage<RouteChangeMessage>({
                 topic: MessageBusTopics.PAGE_CHANGE,
                 data: {
                     route: change.newValue
                 }
             });
-        });
+        }));
     }
 
     async componentWillUnmount() {
-        if (this.currentPageObserver) {
-            this.currentPageObserver();
-        }
+        await this.store.unload();
     }
 
     render() {

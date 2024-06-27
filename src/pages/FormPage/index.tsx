@@ -21,12 +21,10 @@ export class FormPage extends BasePage {
     }
 
     async componentDidMount(): Promise<void> {
-        await this.appStore.load();
         await this.formStore.load();
     }
     async componentWillUnmount(): Promise<void> {
         await this.formStore.unload();
-        await this.appStore.unload();
     }
     render(): React.ReactNode {
         return (

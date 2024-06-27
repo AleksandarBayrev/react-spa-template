@@ -14,11 +14,9 @@ export class PageNotFound extends BasePage {
     }
 
     async componentDidMount(): Promise<void> {
-        await this.store.load();
     }
 
     async componentWillUnmount(): Promise<void> {
-        await this.store.unload();
     }
 
     render(): React.ReactNode {

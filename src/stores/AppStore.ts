@@ -1,8 +1,9 @@
-import { IObservableValue, observable, runInAction } from "mobx";
+import { IObservableValue, Lambda, observable, runInAction } from "mobx";
 import { IAppStore } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class AppStore implements IAppStore {
+    public readonly lambdaObservers: Lambda[];
     //#region Public properties
     @observable
     currentPage: IObservableValue<string>;
@@ -12,6 +13,7 @@ export class AppStore implements IAppStore {
     //#endregion
 
     constructor() {
+        this.lambdaObservers = [];
         const url = new URL(window.location.href);
         this.currentPage = observable.box(url.pathname);
         this.currentFullUrl = observable.box(url.toString());
@@ -21,6 +23,7 @@ export class AppStore implements IAppStore {
     async load(): Promise<void> {
     }
     async unload(): Promise<void> {
+        this.lambdaObservers.forEach(lambdaObserver => lambdaObserver());
     }
     //#endregion
 
