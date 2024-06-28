@@ -17,6 +17,10 @@ export class MessageBus implements IMessageBus {
         callbacks.push(callback);
     }
 
+    numberOfSubscribers(): number {
+        return this.subscriptions.size;
+    }
+
     async publishMessage<T>(message: Message<T>): Promise<void> {
         const callbacks = this.subscriptions.get(message.topic);
         if (!callbacks) {

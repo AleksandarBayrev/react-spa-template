@@ -3,7 +3,7 @@ import { IAppStore } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class AppStore implements IAppStore {
-    public readonly lambdaObservers: Lambda[];
+    private readonly lambdaObservers: Map<string, Lambda>;
     //#region Public properties
     @observable
     currentPage: IObservableValue<string>;
@@ -13,7 +13,7 @@ export class AppStore implements IAppStore {
     //#endregion
 
     constructor() {
-        this.lambdaObservers = [];
+        this.lambdaObservers = new Map<string, Lambda>();
         const url = new URL(window.location.href);
         this.currentPage = observable.box(url.pathname);
         this.currentFullUrl = observable.box(url.toString());
@@ -23,7 +23,6 @@ export class AppStore implements IAppStore {
     async load(): Promise<void> {
     }
     async unload(): Promise<void> {
-        this.lambdaObservers.forEach(lambdaObserver => lambdaObserver());
     }
     //#endregion
 
@@ -38,6 +37,20 @@ export class AppStore implements IAppStore {
             const url = new URL(window.location.href);
             this.currentFullUrl.set(url.toString());
         });
+    }
+    //#endregion
+
+    //#region Observer operations
+    addObserver = (name: string, observer: Lambda) => {
+        if (this.lambdaObservers.has(name)) return;
+        this.lambdaObservers.set(name, observer);
+    }
+    clearObservers = () => {
+        this.lambdaObservers.forEach((observer) => observer());
+        this.lambdaObservers.clear();
+    }
+    getObserverNames = () => {
+        return [...this.lambdaObservers.keys()];
     }
     //#endregion
 }

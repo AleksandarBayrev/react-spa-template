@@ -32,9 +32,16 @@ export class App extends React.Component {
     };
 
     async componentDidMount() {
+        setInterval(() => {
+            console.log(this.messageBus.numberOfSubscribers());
+        }, 100);
+        console.log(new Date(), 'mounting')
         await this.store.load();
-        this.store.lambdaObservers.push(observe(this.store.currentPage, async (change) => {
-            await this.messageBus.publishMessage<RouteChangeMessage>({
+        this.store.addObserver("routeChangeObserver", observe(this.store.currentPage, (change) => {
+            console.log(change);
+            console.log(this.store.getObserverNames());
+            if (change.oldValue === change.newValue) return;
+            return this.messageBus.publishMessage<RouteChangeMessage>({
                 topic: MessageBusTopics.PAGE_CHANGE,
                 data: {
                     route: change.newValue
@@ -44,6 +51,7 @@ export class App extends React.Component {
     }
 
     async componentWillUnmount() {
+        console.log(new Date(), 'unmounting')
         await this.store.unload();
     }
 

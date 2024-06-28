@@ -27,6 +27,10 @@ export class Link extends React.Component<LinkProps> {
     }
 
     private goToLocation = () => {
+        console.log(this.props.location, this.appStore.currentPage.get())
+        if (this.props.location === this.appStore.currentPage.get()) {
+            return;
+        }
         this.appStore.setCurrentPage(this.props.location);
     }
 
