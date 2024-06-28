@@ -1,16 +1,15 @@
 import React from "react";
 import { IAppStore } from "../../interfaces";
-import { AppContext } from "../../AppContext";
-import { BasePage } from "../../base";
+import { BasePage, isValidContext } from "../../base";
 import { observer } from "mobx-react";
 
 @observer
 export class HomePage extends BasePage {
     private get appStore(): IAppStore {
-        if (!this.context) {
+        if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return (this.context as AppContext).dependencyInjection.getService<IAppStore>("IAppStore");
+        return this.context.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
     async componentDidMount(): Promise<void> {
