@@ -1,34 +1,35 @@
 import React from "react";
 import "./App.css";
 import { observer } from "mobx-react";
-import { Lambda, observe } from "mobx";
+import { observe } from "mobx";
 import { IAppStore, IMessageBus, RouteChangeMessage, IPageRenderer } from "./interfaces";
 import { MessageBusTopics } from "./constants";
 import { Menu } from "./navigation";
 import { AppLogo } from "./ui";
 import { AppContext } from "./AppContext";
+import { isValidContext } from "./base";
 
 @observer
 export class App extends React.Component {
     private get store(): IAppStore {
-        if (!this.context) {
+        if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return (this.context as AppContext).dependencyInjection.getService<IAppStore>("IAppStore");
+        return this.context.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
     private get pageRenderer(): IPageRenderer {
-        if (!this.context) {
+        if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return (this.context as AppContext).dependencyInjection.getService<IPageRenderer>("IPageRenderer");
+        return this.context.dependencyInjection.getService<IPageRenderer>("IPageRenderer");
     }
 
     private get messageBus(): IMessageBus {
-        if (!this.context) {
+        if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return (this.context as AppContext).dependencyInjection.getService<IMessageBus>("IMessageBus");
+        return this.context.dependencyInjection.getService<IMessageBus>("IMessageBus");
     };
 
     async componentDidMount() {
