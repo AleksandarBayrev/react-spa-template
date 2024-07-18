@@ -2,6 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { DependencyInjection } from "../base";
 import { IAppStore } from "../interfaces";
+import { NavLink } from "react-router-dom";
 import "./Link.css";
 
 type LinkProps = {
@@ -21,13 +22,12 @@ export class Link extends React.Component<LinkProps> {
     render(): React.ReactNode {
         return (
             <div className="app-link-wrapper">
-                <a className={this.getStyles()} onClick={this.goToLocation}>{this.props.text}</a>
+                <NavLink onClick={this.goToLocation} className={this.getStyles} to={this.props.location}>{this.props.text}</NavLink>
             </div>
         )
     }
 
     private goToLocation = () => {
-        console.log(this.props.location, this.appStore.currentPage.get())
         if (this.props.location === this.appStore.currentPage.get()) {
             return;
         }

@@ -48,12 +48,10 @@ export class FormStore implements IFormStore {
                 url.searchParams.set("name", name);
             } else {
                 url.searchParams.delete("name");
-            }
-            this.messageBus.publishMessage<RouteChangeMessage>({
-                topic: MessageBusTopics.PAGE_CHANGE,
-                data: {
-                    route: this.urlParser.parseUrl(url)
-                }
+            }   
+            this.messageBus.publishMessage({
+                topic: MessageBusTopics.PAGE_LOADED,
+                data: {}
             });
         });
     }

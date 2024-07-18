@@ -1,6 +1,6 @@
 import React from "react";
-import { IFormStore, IMessageBus, IPageRenderer, IRouteManager, IUrlParser } from "../interfaces";
-import { MessageBus, PageRenderer, RouteManager, UrlParser } from "../services";
+import { IFormStore, IMessageBus, IPageRenderer, IUrlParser } from "../interfaces";
+import { MessageBus, PageRenderer, UrlParser } from "../services";
 import { IAppStore } from "../interfaces";
 import { AppStore, FormStore } from "../stores";
 import { DependencyInjection } from "../base";
@@ -11,7 +11,6 @@ export const setupDependencyInjection = async () => {
     DependencyInjection.setupInstance(console.log, false);
     DependencyInjection.getInstance().registerService<IMessageBus>("IMessageBus", "singleton", MessageBus, []);
     DependencyInjection.getInstance().registerService<IUrlParser>("IUrlParser", "singleton", UrlParser, []);
-    DependencyInjection.getInstance().registerService<IRouteManager>("IRouteManager", "singleton", RouteManager, []);
     DependencyInjection.getInstance().registerService<IAppStore>("IAppStore", "singleton", AppStore, []);
     DependencyInjection.getInstance().registerService<IFormStore>("IFormStore", "singleton", FormStore, [
         DependencyInjection.getInstance().getService<IAppStore>("IAppStore"),
