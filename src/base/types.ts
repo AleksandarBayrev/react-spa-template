@@ -11,4 +11,5 @@ export type AvailableServices = "IMessageBus"
     | "IUrlParser"
     | "IAppStore"
     | "IFormStore"
-    | "IPageRenderer";
+    | "IPageRenderer"
+    | "IBrowserHistoryManager";

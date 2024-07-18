@@ -1,5 +1,5 @@
-import { IObservableValue, observable, runInAction } from "mobx";
-import { IAppStore, IFormStore, IMessageBus, IUrlParser, RouteChangeMessage } from "../interfaces";
+import { IObservableValue, observable, runInAction, observe } from "mobx";
+import { IAppStore, IBrowserHistoryManager, IFormStore, IMessageBus, IUrlParser, RouteChangeMessage } from "../interfaces";
 import { enhanceClass } from "../base";
 import { MessageBusTopics, Routes } from "../constants";
 
@@ -8,6 +8,7 @@ export class FormStore implements IFormStore {
     private readonly appStore: IAppStore;
     private readonly messageBus: IMessageBus;
     private readonly urlParser: IUrlParser;
+    private readonly browserHistoryManager: IBrowserHistoryManager;
     //#endregion
     //#region Public properties
     @observable
@@ -17,15 +18,20 @@ export class FormStore implements IFormStore {
     constructor(
         appStore: IAppStore,
         messageBus: IMessageBus,
-        urlParser: IUrlParser) {
+        urlParser: IUrlParser,
+        browserHistoryManager: IBrowserHistoryManager) {
         this.appStore = appStore;
         this.messageBus = messageBus;
         this.urlParser = urlParser;
+        this.browserHistoryManager = browserHistoryManager;
         this.name = observable.box("");
     }
 
     //#region Base methods
     async load(): Promise<void> {
+        observe(this.name, (change) => {
+
+        });
         const url = new URL(window.location.href);
         this.setName(this.urlParser.getUrlParameter(url, "name"));
     }
@@ -42,18 +48,25 @@ export class FormStore implements IFormStore {
     //#region Actions
     setName = (name: string): void => {
         runInAction(() => {
-            const url = new URL(`${window.location.origin}${this.appStore.currentPage.get()}`);
             this.name.set(name);
-            if (name) {
-                url.searchParams.set("name", name);
-            } else {
-                url.searchParams.delete("name");
-            }   
+            this.updateUrl();
             this.messageBus.publishMessage({
                 topic: MessageBusTopics.PAGE_LOADED,
-                data: {}
+                data: {
+                    name
+                }
             });
         });
+    }
+
+    updateUrl = () => {
+        const url = new URL(`${this.browserHistoryManager.origin}${this.appStore.currentPage.get()}`);
+        if (this.name.get()) {
+            url.searchParams.set("name", this.name.get());
+        } else {
+            url.searchParams.delete("name");
+        }
+        this.browserHistoryManager.replace(url.toString());
     }
     //#endregion
 }

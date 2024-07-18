@@ -1,5 +1,5 @@
 import React from "react";
-import { IAppStore, IFormStore } from "../../interfaces";
+import { IAppStore, IBrowserHistoryManager, IFormStore, IUrlParser } from "../../interfaces";
 import { observer } from "mobx-react";
 import { BasePage, isValidContext } from "../../base";
 import { AppContext } from "../../AppContext";
@@ -21,8 +21,15 @@ export class FormPage extends BasePage {
         return this.appContext.dependencyInjection.getService<IFormStore>("IFormStore");
     }
 
+    private get browserHistoryManager(): IBrowserHistoryManager {
+        return this.appContext.dependencyInjection.getService<IBrowserHistoryManager>("IBrowserHistoryManager");
+    }
+
     async componentDidMount(): Promise<void> {
         await this.formStore.load();
+        this.browserHistoryManager.listen((update) => {
+            console.log(update);
+        });
     }
 
     async componentWillUnmount(): Promise<void> {

@@ -1,6 +1,6 @@
 import React from "react";
-import { IFormStore, IMessageBus, IPageRenderer, IUrlParser } from "../interfaces";
-import { MessageBus, PageRenderer, UrlParser } from "../services";
+import { IBrowserHistoryManager, IFormStore, IMessageBus, IPageRenderer, IUrlParser } from "../interfaces";
+import { BrowserHistoryManager, MessageBus, PageRenderer, UrlParser } from "../services";
 import { IAppStore } from "../interfaces";
 import { AppStore, FormStore } from "../stores";
 import { DependencyInjection } from "../base";
@@ -12,10 +12,12 @@ export const setupDependencyInjection = async () => {
     DependencyInjection.getInstance().registerService<IMessageBus>("IMessageBus", "singleton", MessageBus, []);
     DependencyInjection.getInstance().registerService<IUrlParser>("IUrlParser", "singleton", UrlParser, []);
     DependencyInjection.getInstance().registerService<IAppStore>("IAppStore", "singleton", AppStore, []);
+    DependencyInjection.getInstance().registerService<IBrowserHistoryManager>("IBrowserHistoryManager", "singleton", BrowserHistoryManager, []);
     DependencyInjection.getInstance().registerService<IFormStore>("IFormStore", "singleton", FormStore, [
         DependencyInjection.getInstance().getService<IAppStore>("IAppStore"),
         DependencyInjection.getInstance().getService<IMessageBus>("IMessageBus"),
-        DependencyInjection.getInstance().getService<IUrlParser>("IUrlParser")
+        DependencyInjection.getInstance().getService<IUrlParser>("IUrlParser"),
+        DependencyInjection.getInstance().getService<IBrowserHistoryManager>("IBrowserHistoryManager"),
     ]);
     DependencyInjection.getInstance().registerService<IPageRenderer>("IPageRenderer", "singleton", PageRenderer, []);
     //#region Configure services
