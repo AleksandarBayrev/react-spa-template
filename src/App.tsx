@@ -30,25 +30,23 @@ export class App extends React.Component {
         },
     ];
 
-    private get store(): IAppStore {
+    private get appContext(): AppContext {
         if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return this.context.dependencyInjection.getService<IAppStore>("IAppStore");
+        return this.context;
+    }
+
+    private get store(): IAppStore {
+        return this.appContext.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
     private get pageRenderer(): IPageRenderer {
-        if (!isValidContext(this.context)) {
-            throw new Error("AppContext not provided!");
-        }
-        return this.context.dependencyInjection.getService<IPageRenderer>("IPageRenderer");
+        return this.appContext.dependencyInjection.getService<IPageRenderer>("IPageRenderer");
     }
 
     private get messageBus(): IMessageBus {
-        if (!isValidContext(this.context)) {
-            throw new Error("AppContext not provided!");
-        }
-        return this.context.dependencyInjection.getService<IMessageBus>("IMessageBus");
+        return this.appContext.dependencyInjection.getService<IMessageBus>("IMessageBus");
     };
 
     async componentDidMount() {
