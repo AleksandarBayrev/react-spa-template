@@ -17,7 +17,7 @@ export class PageRenderer implements IPageRenderer {
         const page = this.pageMaps.get(route);
         if (!page) {
             console.warn(`Page for route: ${route} is not registered, rendering 404 page!`);
-            return this.pageMaps.get(Routes["/404"]) as React.ReactElement;
+            return this.pageMaps.get(Routes["/404"])!;
         }
         return page;
     }
