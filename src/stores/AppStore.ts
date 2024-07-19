@@ -1,9 +1,8 @@
-import { IObservableValue, Lambda, observable, runInAction } from "mobx";
+import { IObservableValue, observable, runInAction } from "mobx";
 import { IAppStore, IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class AppStore implements IAppStore {
-    private readonly lambdaObservers: Map<string, Lambda>;
     private readonly browserHistoryManager: IBrowserHistoryManager;
     //#region Public properties
     @observable
@@ -14,7 +13,6 @@ export class AppStore implements IAppStore {
     //#endregion
 
     constructor(browserHistoryManager: IBrowserHistoryManager) {
-        this.lambdaObservers = new Map<string, Lambda>();
         this.browserHistoryManager = browserHistoryManager;
         const url = new URL(this.browserHistoryManager.currentUrl);
         this.currentPage = observable.box(this.browserHistoryManager.pathAndQuery);
@@ -39,20 +37,6 @@ export class AppStore implements IAppStore {
             const url = new URL(this.browserHistoryManager.currentUrl);
             this.currentFullUrl.set(url.toString());
         });
-    }
-    //#endregion
-
-    //#region Observer operations
-    addObserver = (name: string, observer: Lambda) => {
-        if (this.lambdaObservers.has(name)) return;
-        this.lambdaObservers.set(name, observer);
-    }
-    clearObservers = () => {
-        this.lambdaObservers.forEach((observer) => observer());
-        this.lambdaObservers.clear();
-    }
-    getObserverNames = () => {
-        return [...this.lambdaObservers.keys()];
     }
     //#endregion
 }
