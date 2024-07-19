@@ -1,6 +1,7 @@
 import React from "react";
-import { IAppStore, IBrowserHistoryManager, IFormStore, IUrlParser } from "../../interfaces";
+import { IAppStore, IBrowserHistoryManager, IFormPageObserverStorage, IFormStore } from "../../interfaces";
 import { observer } from "mobx-react";
+import { observe } from "mobx";
 import { BasePage, isValidContext } from "../../base";
 import { AppContext } from "../../AppContext";
 
@@ -25,14 +26,23 @@ export class FormPage extends BasePage {
         return this.appContext.dependencyInjection.getService<IBrowserHistoryManager>("IBrowserHistoryManager");
     }
 
+    private get observers(): IFormPageObserverStorage {
+        return this.appContext.dependencyInjection.getService<IFormPageObserverStorage>("IFormPageObserverStorage");
+    }
+
     async componentDidMount(): Promise<void> {
         await this.formStore.load();
+        this.observers.trySet("nameObserver", observe(this.formStore.name, (change) => {
+            this.formStore.updateUrl();
+        }));
         this.browserHistoryManager.listen("onNameChange", (update) => {
             console.log(update);
         });
     }
 
     async componentWillUnmount(): Promise<void> {
+        this.observers.deleteOne("nameObserver");
+        this.browserHistoryManager.unlisten("onNameChange"); 
         await this.formStore.unload();
     }
 

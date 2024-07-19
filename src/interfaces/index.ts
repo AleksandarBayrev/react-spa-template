@@ -7,3 +7,5 @@ export * from "./messages";
 export * from "./IUrlParser";
 export * from "./LinkConfiguration";
 export * from "./IBrowserHistoryManager";
+export * from "./IObserverStorage";
+export * from "./IFormPageObserverStorage";

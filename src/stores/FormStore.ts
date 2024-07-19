@@ -29,14 +29,11 @@ export class FormStore implements IFormStore {
 
     //#region Base methods
     async load(): Promise<void> {
-        observe(this.name, (change) => {
-
-        });
-        const url = new URL(window.location.href);
+        const url = new URL(this.browserHistoryManager.currentUrl);
         this.setName(this.urlParser.getUrlParameter(url, "name"));
     }
     async unload(): Promise<void> {
-        const url = new URL(window.location.href);
+        const url = new URL(this.browserHistoryManager.currentUrl);
         if (url.pathname.includes(Routes["/form"])) {
             this.setName(this.urlParser.getUrlParameter(url, "name"));
         } else {
@@ -49,26 +46,23 @@ export class FormStore implements IFormStore {
     setName = (name: string): void => {
         runInAction(() => {
             this.name.set(name);
-            this.updateUrl();
-            this.messageBus.publishMessage({
-                topic: MessageBusTopics.PAGE_LOADED,
-                data: {
-                    name
-                }
-            });
         });
     }
-    //#endregion
 
-    //#region Private methods
-    private updateUrl = () => {
-        const url = new URL(`${this.browserHistoryManager.origin}${this.appStore.currentPage.get()}`);
+    updateUrl = () => {
+        const url = new URL(this.browserHistoryManager.currentUrl);
         if (this.name.get()) {
             url.searchParams.set("name", this.name.get());
         } else {
             url.searchParams.delete("name");
         }
-        this.browserHistoryManager.replace(url.toString());
+        this.browserHistoryManager.push(url.toString());
+        this.messageBus.publishMessage({
+            topic: MessageBusTopics.PAGE_LOADED,
+            data: {
+                name: this.name.get()
+            }
+        });
     }
     //#endregion
 }

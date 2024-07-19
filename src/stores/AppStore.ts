@@ -1,9 +1,10 @@
 import { IObservableValue, Lambda, observable, runInAction } from "mobx";
-import { IAppStore } from "../interfaces";
+import { IAppStore, IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class AppStore implements IAppStore {
     private readonly lambdaObservers: Map<string, Lambda>;
+    private readonly browserHistoryManager: IBrowserHistoryManager;
     //#region Public properties
     @observable
     currentPage: IObservableValue<string>;
@@ -12,9 +13,10 @@ export class AppStore implements IAppStore {
     currentFullUrl: IObservableValue<string>;
     //#endregion
 
-    constructor() {
+    constructor(browserHistoryManager: IBrowserHistoryManager) {
         this.lambdaObservers = new Map<string, Lambda>();
-        const url = new URL(window.location.href);
+        this.browserHistoryManager = browserHistoryManager;
+        const url = new URL(this.browserHistoryManager.currentUrl);
         this.currentPage = observable.box(url.pathname);
         this.currentFullUrl = observable.box(url.toString());
     }
@@ -34,7 +36,7 @@ export class AppStore implements IAppStore {
     }
     updateCurrentFullUrl = (): void => {
         runInAction(() => {
-            const url = new URL(window.location.href);
+            const url = new URL(this.browserHistoryManager.currentUrl);
             this.currentFullUrl.set(url.toString());
         });
     }

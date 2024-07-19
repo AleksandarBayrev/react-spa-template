@@ -3,7 +3,7 @@ import { IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class BrowserHistoryManager implements IBrowserHistoryManager {
-    private readonly listeners: Map<string, Listener>;
+    private readonly listeners: Map<string, {listenerName: string, listener: Listener, removeSubscription: () => void}>;
     private readonly history: BrowserHistory;
 
     constructor() {
@@ -13,6 +13,7 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
 
     public push = (path: string) => {
         this.history.push(path);
+        console.log(this.pathAndQuery);
     }
 
     public replace = (path: string) => {
@@ -31,8 +32,16 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
         if (this.listeners.has(listenerName)) {
             return;
         }
-        this.listeners.set(listenerName, listener);
-        this.history.listen(listener);
+        const removeSubscription = this.history.listen(listener);
+        this.listeners.set(listenerName, {listenerName, listener, removeSubscription});
+    }
+
+    public unlisten = (listenerName: string) => {
+        const listener = this.listeners.get(listenerName);
+        if (listener) {
+            listener.removeSubscription();
+            this.listeners.delete(listener.listenerName);
+        }
     }
 
     public get location() {
@@ -41,6 +50,14 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
     
     public get origin() {
         return window.location.origin;
+    }
+
+    public get pathAndQuery() {
+        return `${this.location.pathname}${this.location.search}`;
+    }
+
+    public get currentUrl() {
+        return window.location.href;
     }
 }
 

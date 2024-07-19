@@ -12,4 +12,5 @@ export type AvailableServices = "IMessageBus"
     | "IAppStore"
     | "IFormStore"
     | "IPageRenderer"
-    | "IBrowserHistoryManager";
+    | "IBrowserHistoryManager"
+    | "IFormPageObserverStorage";
