@@ -84,7 +84,7 @@ describe("BrowserHistoryManager", () => {
     });
     it("pathOnly returns as expected", () => {
         const { instance, history } = getInstance(undefined);
-        expect(instance.pathAndQuery).toEqual(history.location.pathname);
+        expect(instance.pathOnly).toEqual(history.location.pathname);
     });
     it("pathAndQuery returns as expected", () => {
         const { instance, history } = getInstance(undefined);
