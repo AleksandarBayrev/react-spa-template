@@ -52,6 +52,10 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
         return window.location.origin;
     }
 
+    public get pathOnly() {
+        return this.location.pathname;
+    }
+
     public get pathAndQuery() {
         return `${this.location.pathname}${this.location.search}`;
     }

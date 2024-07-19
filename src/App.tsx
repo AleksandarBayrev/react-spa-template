@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { observer } from "mobx-react";
-import { IAppStore, IMessageBus, IPageRenderer } from "./interfaces";
+import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer } from "./interfaces";
 import { Routes as RoutesConstants } from "./constants";
 import { Menu } from "./navigation";
 import { AppLogo } from "./ui";
@@ -49,12 +49,20 @@ export class App extends React.Component {
         return this.appContext.dependencyInjection.getService<IMessageBus>("IMessageBus");
     };
 
+    private get browserHistoryManager(): IBrowserHistoryManager {
+        return this.appContext.dependencyInjection.getService<IBrowserHistoryManager>("IBrowserHistoryManager");
+    };
+
     async componentDidMount() {
         await this.store.load();
+        this.browserHistoryManager.listen("onPageChange", (update) => {
+            this.store.setCurrentPage(this.browserHistoryManager.pathOnly);
+        });
     }
 
     async componentWillUnmount() {
         await this.store.unload();
+        this.browserHistoryManager.unlisten("onPageChange");
     }
 
     private renderRoutes = () => {

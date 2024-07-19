@@ -82,6 +82,10 @@ describe("BrowserHistoryManager", () => {
         expect(instance.origin).toEqual(window.location.origin);
         global.window = { ...originalGlobalWindow }
     });
+    it("pathOnly returns as expected", () => {
+        const { instance, history } = getInstance(undefined);
+        expect(instance.pathAndQuery).toEqual(history.location.pathname);
+    });
     it("pathAndQuery returns as expected", () => {
         const { instance, history } = getInstance(undefined);
         expect(instance.pathAndQuery).toEqual(`${history.location.pathname}${history.location.search}`);

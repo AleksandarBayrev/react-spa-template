@@ -17,7 +17,7 @@ export class AppStore implements IAppStore {
         this.lambdaObservers = new Map<string, Lambda>();
         this.browserHistoryManager = browserHistoryManager;
         const url = new URL(this.browserHistoryManager.currentUrl);
-        this.currentPage = observable.box(url.pathname);
+        this.currentPage = observable.box(this.browserHistoryManager.pathAndQuery);
         this.currentFullUrl = observable.box(url.toString());
     }
 
