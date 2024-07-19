@@ -1,5 +1,5 @@
 import React from "react";
-import { IAppStore } from "../../interfaces";
+import { IAppStore, IUrlParser } from "../../interfaces";
 import { observer } from "mobx-react";
 import { BasePage, isValidContext } from "../../base";
 import { AppContext } from "../../AppContext";
@@ -17,6 +17,10 @@ export class PageNotFound extends BasePage {
         return this.appContext.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
+    private get urlParser(): IUrlParser {
+        return this.appContext.dependencyInjection.getService<IUrlParser>("IUrlParser");
+    }
+
     async componentDidMount(): Promise<void> {
     }
 
@@ -32,7 +36,7 @@ export class PageNotFound extends BasePage {
     }
 
     private get requestedPath() {
-        const uri = new URL(this.store.currentFullUrl.get());
-        return decodeURIComponent(uri.searchParams.get("requestedRoute") ?? "");
+        const requestedRoute = this.urlParser.getUrlParameter(new URL(this.store.currentFullUrl.get()), "requestedRoute");
+        return decodeURIComponent(requestedRoute);
     }
 }
