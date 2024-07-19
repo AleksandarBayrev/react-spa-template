@@ -58,8 +58,10 @@ export class FormStore implements IFormStore {
             });
         });
     }
+    //#endregion
 
-    updateUrl = () => {
+    //#region Private methods
+    private updateUrl = () => {
         const url = new URL(`${this.browserHistoryManager.origin}${this.appStore.currentPage.get()}`);
         if (this.name.get()) {
             url.searchParams.set("name", this.name.get());
