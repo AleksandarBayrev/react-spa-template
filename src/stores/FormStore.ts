@@ -1,5 +1,5 @@
-import { IObservableValue, observable, runInAction, observe } from "mobx";
-import { IAppStore, IBrowserHistoryManager, IFormStore, IMessageBus, IUrlParser, RouteChangeMessage } from "../interfaces";
+import { IObservableValue, observable, runInAction } from "mobx";
+import { IAppStore, IBrowserHistoryManager, IFormStore, IMessageBus, IUrlParser, PageLoadedMessage } from "../interfaces";
 import { enhanceClass } from "../base";
 import { MessageBusTopics, Routes } from "../constants";
 
@@ -57,10 +57,10 @@ export class FormStore implements IFormStore {
             url.searchParams.delete("name");
         }
         this.browserHistoryManager.push(url.toString());
-        this.messageBus.publishMessage({
+        this.messageBus.publishMessage<PageLoadedMessage>({
             topic: MessageBusTopics.PAGE_LOADED,
             data: {
-                name: this.name.get()
+                route: this.name.get()
             }
         });
     }

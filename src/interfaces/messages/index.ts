@@ -1,1 +1,1 @@
-export * from "./RouteChangeMessage";
+export * from "./PageLoadedMessage";
