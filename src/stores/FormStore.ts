@@ -60,7 +60,7 @@ export class FormStore implements IFormStore {
         this.messageBus.publishMessage<PageLoadedMessage>({
             topic: MessageBusTopics.PAGE_LOADED,
             data: {
-                route: this.name.get()
+                route: this.browserHistoryManager.pathAndQuery
             }
         });
     }
