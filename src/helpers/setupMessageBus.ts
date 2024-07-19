@@ -4,7 +4,7 @@ import { IMessageBus } from "../interfaces";
 
 export const setupMessageBus = async () => {
     const messageBus = DependencyInjection.getInstance().getService<IMessageBus>("IMessageBus");
-    messageBus.subscribe(MessageBusTopics.PAGE_LOADED, () => {
-        console.log("page loaded");
+    messageBus.subscribe<{name: string}>(MessageBusTopics.PAGE_LOADED, (message) => {
+        console.log(`page loaded${message.data?.name ? ", name: " + message.data.name : ""}`);
     });
 }
