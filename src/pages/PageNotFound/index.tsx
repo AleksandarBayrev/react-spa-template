@@ -36,7 +36,8 @@ export class PageNotFound extends BasePage {
     }
 
     private get requestedPath() {
-        const requestedRoute = this.urlParser.getUrlParameter(new URL(this.store.currentFullUrl.get()), "requestedRoute");
-        return decodeURIComponent(requestedRoute);
+        const currentFullUrl = new URL(this.store.currentFullUrl.get());
+        const requestedRoute = this.urlParser.getUrlParameter(currentFullUrl, "requestedRoute");
+        return decodeURIComponent(requestedRoute ? requestedRoute : this.urlParser.parseUrl(currentFullUrl));
     }
 }
