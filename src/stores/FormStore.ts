@@ -1,7 +1,8 @@
 import { IObservableValue, observable, runInAction } from "mobx";
-import { IAppStore, IBrowserHistoryManager, IFormStore, IMessageBus, IUrlParser, PageLoadedMessage } from "../interfaces";
+import { IAppStore, IBrowserHistoryManager, IFormStore, IMessageBus, IUrlParser } from "../interfaces";
 import { enhanceClass } from "../base";
 import { MessageBusTopics, Routes } from "../constants";
+import { PageLoadedMessage } from "../types";
 
 export class FormStore implements IFormStore {
     //#region Private properties

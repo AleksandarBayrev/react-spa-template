@@ -1,6 +1,7 @@
 import { DependencyInjection } from "../base";
 import { MessageBusTopics } from "../constants";
-import { IMessageBus, PageLoadedMessage } from "../interfaces";
+import { IMessageBus } from "../interfaces";
+import { PageLoadedMessage } from "../types";
 
 export const setupMessageBus = async () => {
     const messageBus = DependencyInjection.getInstance().getService<IMessageBus>("IMessageBus");
