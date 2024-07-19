@@ -1,30 +1,41 @@
 import React from "react";
-import { IAppStore, IFormStore } from "../../interfaces";
+import { IAppStore, IBrowserHistoryManager, IFormStore, IUrlParser } from "../../interfaces";
 import { observer } from "mobx-react";
 import { BasePage, isValidContext } from "../../base";
+import { AppContext } from "../../AppContext";
 
 @observer
 export class FormPage extends BasePage {
-    private get appStore(): IAppStore {
+    private get appContext(): AppContext {
         if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return this.context.dependencyInjection.getService<IAppStore>("IAppStore");
+        return this.context;
+    }
+
+    private get appStore(): IAppStore {
+        return this.appContext.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
     private get formStore(): IFormStore {
-        if (!isValidContext(this.context)) {
-            throw new Error("AppContext not provided!");
-        }
-        return this.context.dependencyInjection.getService<IFormStore>("IFormStore");
+        return this.appContext.dependencyInjection.getService<IFormStore>("IFormStore");
+    }
+
+    private get browserHistoryManager(): IBrowserHistoryManager {
+        return this.appContext.dependencyInjection.getService<IBrowserHistoryManager>("IBrowserHistoryManager");
     }
 
     async componentDidMount(): Promise<void> {
         await this.formStore.load();
+        this.browserHistoryManager.listen("onNameChange", (update) => {
+            console.log(update);
+        });
     }
+
     async componentWillUnmount(): Promise<void> {
         await this.formStore.unload();
     }
+
     render(): React.ReactNode {
         return (
             <div className="app-page app-page-form">

@@ -2,14 +2,19 @@ import React from "react";
 import { IAppStore } from "../../interfaces";
 import { observer } from "mobx-react";
 import { BasePage, isValidContext } from "../../base";
+import { AppContext } from "../../AppContext";
 
 @observer
 export class PageNotFound extends BasePage {
-    private get store(): IAppStore {
+    private get appContext(): AppContext {
         if (!isValidContext(this.context)) {
             throw new Error("AppContext not provided!");
         }
-        return this.context.dependencyInjection.getService<IAppStore>("IAppStore");
+        return this.context;
+    }
+
+    private get store(): IAppStore {
+        return this.appContext.dependencyInjection.getService<IAppStore>("IAppStore");
     }
 
     async componentDidMount(): Promise<void> {

@@ -1,16 +1,10 @@
 import { DependencyInjection } from "../base";
 import { MessageBusTopics } from "../constants";
-import { IAppStore, IMessageBus, IRouteManager, RouteChangeMessage } from "../interfaces";
+import { IMessageBus } from "../interfaces";
 
 export const setupMessageBus = async () => {
     const messageBus = DependencyInjection.getInstance().getService<IMessageBus>("IMessageBus");
-    const routeManager = DependencyInjection.getInstance().getService<IRouteManager>("IRouteManager");
-    const appStore = DependencyInjection.getInstance().getService<IAppStore>("IAppStore");
-    await messageBus.subscribe<RouteChangeMessage>(MessageBusTopics.PAGE_CHANGE, (message) => {
-        routeManager.updateRoute(message.data.route);
-    });
-    await messageBus.subscribe<RouteChangeMessage>(MessageBusTopics.PAGE_CHANGE, (message) => {
-        appStore.updateCurrentFullUrl();
-        console.log(`You are here: ${appStore.currentFullUrl.get()}`);
+    messageBus.subscribe<{name: string}>(MessageBusTopics.PAGE_LOADED, (message) => {
+        console.log(`page loaded${message.data?.name ? ", name: " + message.data.name : ""}`);
     });
 }

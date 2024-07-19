@@ -1,5 +1,5 @@
 export enum MessageBusTopics {
-    PAGE_CHANGE = "PAGE_CHANGE"
+    PAGE_LOADED = "PAGE_LOADED"
 }
 
 export enum Routes {
