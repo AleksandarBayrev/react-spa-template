@@ -7,6 +7,7 @@ import { DependencyInjection } from "../base";
 import { setupPageRenderer } from "./setupPageRenderer";
 import { setupMessageBus } from "./setupMessageBus";
 import { createBrowserHistory } from "history";
+import { Routes } from "../constants";
 
 export const setupDependencyInjection = async () => {
     DependencyInjection.setupInstance(console.log, false);
@@ -25,7 +26,7 @@ export const setupDependencyInjection = async () => {
         DependencyInjection.getInstance().getService<IUrlParser>("IUrlParser"),
         DependencyInjection.getInstance().getService<IBrowserHistoryManager>("IBrowserHistoryManager"),
     ]);
-    DependencyInjection.getInstance().registerService<IPageRenderer>("IPageRenderer", "singleton", PageRenderer, []);
+    DependencyInjection.getInstance().registerService<IPageRenderer>("IPageRenderer", "singleton", PageRenderer, [Routes]);
     //#region Configure services
     await setupMessageBus();
     setupPageRenderer();
