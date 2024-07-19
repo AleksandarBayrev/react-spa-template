@@ -3,7 +3,13 @@ import { IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
 export class BrowserHistoryManager implements IBrowserHistoryManager {
-    private readonly history: BrowserHistory = createBrowserHistory();
+    private readonly listeners: Map<string, Listener>;
+    private readonly history: BrowserHistory;
+
+    constructor() {
+        this.listeners = new Map();
+        this.history = createBrowserHistory();
+    }
 
     public push = (path: string) => {
         this.history.push(path);
@@ -21,7 +27,11 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
         this.history.forward();
     }
 
-    public listen = (listener: Listener) => {
+    public listen = (listenerName: string, listener: Listener) => {
+        if (this.listeners.has(listenerName)) {
+            return;
+        }
+        this.listeners.set(listenerName, listener);
         this.history.listen(listener);
     }
 

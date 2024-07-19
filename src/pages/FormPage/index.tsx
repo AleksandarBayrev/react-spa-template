@@ -27,7 +27,7 @@ export class FormPage extends BasePage {
 
     async componentDidMount(): Promise<void> {
         await this.formStore.load();
-        this.browserHistoryManager.listen((update) => {
+        this.browserHistoryManager.listen("onNameChange", (update) => {
             console.log(update);
         });
     }

@@ -5,7 +5,7 @@ export interface IBrowserHistoryManager {
     replace(path: string): void;
     back(): void;
     forward(): void;
-    listen(listener: Listener): void;
+    listen(listenerName: string, listener: Listener): void;
     get location(): Location;
     get origin(): string;
 }
