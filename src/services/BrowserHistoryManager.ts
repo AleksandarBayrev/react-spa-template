@@ -1,4 +1,4 @@
-import { createBrowserHistory, BrowserHistory, Listener } from "history";
+import { BrowserHistory, Listener } from "history";
 import { IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
 
@@ -6,9 +6,9 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
     private readonly listeners: Map<string, {listenerName: string, listener: Listener, removeSubscription: () => void}>;
     private readonly history: BrowserHistory;
 
-    constructor() {
+    constructor(history: BrowserHistory) {
         this.listeners = new Map();
-        this.history = createBrowserHistory();
+        this.history = history;
     }
 
     public push = (path: string) => {
@@ -40,7 +40,7 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
         const listener = this.listeners.get(listenerName);
         if (listener) {
             listener.removeSubscription();
-            this.listeners.delete(listener.listenerName);
+            this.listeners.delete(listener.listenerName );
         }
     }
 
