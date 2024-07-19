@@ -1,5 +1,5 @@
 import { DependencyInjection } from "./DependencyInjection";
-import { enhanceClass } from "./enhanceClass";
+import { enhanceClass } from "./helpers";
 import { AvailableServices } from "./types";
 
 describe("DependencyInjection", () => {

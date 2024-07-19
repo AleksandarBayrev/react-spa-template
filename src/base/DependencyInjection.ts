@@ -1,4 +1,4 @@
-import { EnhancedClass } from "./enhanceClass";
+import { EnhancedClass } from "./helpers";
 import { DILogger, ServiceDescription, ServiceLifespan, DIClassDefinition, AvailableServices } from "./types";
 
 export class DependencyInjection {

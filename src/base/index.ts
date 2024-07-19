@@ -1,4 +1,4 @@
+// istanbul ignore file
 export * from "./DependencyInjection";
-export { enhanceClass } from "./helpers";
+export { enhanceClass, EnhancedClass, isValidContext } from "./helpers";
 export { BasePage } from "./BasePage";
-export { isValidContext} from "./isValidContext";
