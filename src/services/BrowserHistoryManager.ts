@@ -1,9 +1,10 @@
 import { BrowserHistory, Listener } from "history";
 import { IBrowserHistoryManager } from "../interfaces";
 import { enhanceClass } from "../base";
+import { BrowserHistoryManagerListener } from "../types";
 
 export class BrowserHistoryManager implements IBrowserHistoryManager {
-    private readonly listeners: Map<string, {listenerName: string, listener: Listener, removeSubscription: () => void}>;
+    private readonly listeners: Map<string, BrowserHistoryManagerListener>;
     private readonly history: BrowserHistory;
 
     constructor(history: BrowserHistory) {
@@ -33,7 +34,11 @@ export class BrowserHistoryManager implements IBrowserHistoryManager {
             return;
         }
         const removeSubscription = this.history.listen(listener);
-        this.listeners.set(listenerName, {listenerName, listener, removeSubscription});
+        this.listeners.set(listenerName, {
+            listenerName,
+            listener,
+            removeSubscription
+        });
     }
 
     public unlisten = (listenerName: string) => {

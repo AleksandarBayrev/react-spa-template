@@ -1,12 +1,13 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import { IPageRenderer } from "../interfaces/IPageRenderer";
+import { IPageRenderer } from "../interfaces";
+import { RouteMapping } from "../types";
 import { enhanceClass } from "../base";
 
 export class PageRenderer implements IPageRenderer {
     private readonly pageMaps: Map<string, React.ReactElement>;
-    private readonly routes: {[key: string]: string}
+    private readonly routes: RouteMapping;
 
-    constructor(routes: {[key: string]: string}) {
+    constructor(routes: RouteMapping) {
         this.pageMaps = new Map();
         this.routes = this.parseRoutes(routes);
     }
@@ -24,7 +25,7 @@ export class PageRenderer implements IPageRenderer {
         return page;
     }
 
-    private parseRoutes(routes: {[key: string]: string}) {
+    private parseRoutes(routes: RouteMapping) {
         if (typeof routes["/404"] !== "string") {
             throw new Error("Please provide a `/404` route!");
         }
