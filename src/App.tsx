@@ -1,34 +1,20 @@
 import React from "react";
 import "./App.css";
 import { observer } from "mobx-react";
-import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer } from "./interfaces";
+import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer, IRoutesProvider } from "./interfaces";
 import { Routes as RoutesConstants } from "./constants";
 import { Menu } from "./navigation";
 import { AppLogo } from "./ui";
 import { AppContext } from "./AppContext";
 import { isValidContext } from "./base";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { RouteDefinition } from "./types";
 
 @observer
 export class App extends React.Component {
-    private readonly routes = [
-        {
-            path: RoutesConstants["/"],
-            element: this.pageRenderer.renderPage(RoutesConstants["/"])
-        },
-        {
-            path: RoutesConstants["/about"],
-            element: this.pageRenderer.renderPage(RoutesConstants["/about"])
-        },
-        {
-            path: RoutesConstants["/form"],
-            element: this.pageRenderer.renderPage(RoutesConstants["/form"])
-        },
-        {
-            path: RoutesConstants["/404"],
-            element: this.pageRenderer.renderPage(RoutesConstants["/404"])
-        },
-    ];
+    private get routes(): RoutesConstants[] {
+        return [...this.appContext.dependencyInjection.getService<IRoutesProvider>("IRoutesProvider").routes];
+    }
 
     private get appContext(): AppContext {
         if (!isValidContext(this.context)) {
@@ -67,7 +53,7 @@ export class App extends React.Component {
 
     private renderRoutes = () => {
         return <Routes>
-            {this.routes.map(x => <Route key={x.path} path={x.path} element={x.element} />)}
+            {this.routes.map(path => <Route key={path} path={path} element={this.pageRenderer.renderPage(path)} />)}
             <Route key="404-page" path="*" element={this.pageRenderer.renderPage(RoutesConstants["/404"])} />
         </Routes>
     }

@@ -3,3 +3,4 @@ export * from "./MessageBus";
 export * from "./UrlParser";
 export * from "./BrowserHistoryManager";
 export * from "./FormPageObserverStorage";
+export * from "./RoutesProvider";

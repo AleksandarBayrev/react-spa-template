@@ -7,3 +7,4 @@ export * from "./IUrlParser";
 export * from "./IBrowserHistoryManager";
 export * from "./IObserverStorage";
 export * from "./IFormPageObserverStorage";
+export * from "./IRoutesProvider";
