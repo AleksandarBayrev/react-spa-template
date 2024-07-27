@@ -1,15 +1,15 @@
 import { ReactElement, JSXElementConstructor } from "react";
 import { IPageRenderer } from "../interfaces";
-import { RouteMapping } from "../types";
 import { enhanceClass } from "../base";
+import { Routes } from "../constants";
 
 export class PageRenderer implements IPageRenderer {
     private readonly pageMaps: Map<string, React.ReactElement>;
-    private readonly routes: RouteMapping;
+    private readonly defaultRoute: Routes;
 
-    constructor(routes: RouteMapping) {
+    constructor(defaultRoute: Routes) {
         this.pageMaps = new Map();
-        this.routes = this.parseRoutes(routes);
+        this.defaultRoute = defaultRoute;
     }
 
     addPage(route: string, element: React.ReactElement) {
@@ -19,17 +19,10 @@ export class PageRenderer implements IPageRenderer {
     renderPage(route: string): ReactElement<any, string | JSXElementConstructor<any>> {
         const page = this.pageMaps.get(route);
         if (!page) {
-            console.warn(`Page for route: ${route} is not registered, rendering 404 page!`);
-            return this.pageMaps.get(this.routes["/404"])!;
+            console.warn(`Page for route: ${route} is not registered, rendering default page = ${this.defaultRoute}!`);
+            return this.pageMaps.get(this.defaultRoute)!;
         }
         return page;
-    }
-
-    private parseRoutes(routes: RouteMapping) {
-        if (typeof routes["/404"] !== "string") {
-            throw new Error("Please provide a `/404` route!");
-        }
-        return routes;
     }
 }
 

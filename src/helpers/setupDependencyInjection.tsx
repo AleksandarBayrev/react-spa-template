@@ -26,7 +26,7 @@ export const setupDependencyInjection = async () => {
         DependencyInjection.getInstance().getService<IUrlParser>("IUrlParser"),
         DependencyInjection.getInstance().getService<IBrowserHistoryManager>("IBrowserHistoryManager"),
     ]);
-    DependencyInjection.getInstance().registerService<IPageRenderer>("IPageRenderer", "singleton", PageRenderer, [RoutesConstants]);
+    DependencyInjection.getInstance().registerService<IPageRenderer>("IPageRenderer", "singleton", PageRenderer, [RoutesConstants["/404"]]);
     DependencyInjection.getInstance().registerService<IRoutesProvider>("IRoutesProvider", "singleton", RoutesProvider, [[
         RoutesConstants["/"],
         RoutesConstants["/about"],
