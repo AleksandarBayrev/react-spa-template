@@ -1,28 +1,29 @@
+import { Routes } from "../constants";
 import { PageRenderer } from "./PageRenderer"
 
 describe("PageRenderer", () => {
-    it("instantiating PageRenderer without a `/404` route throws", () => {
-        expect(() => {
-            new PageRenderer({"asd": "asd"})
-        }).toThrow();
+    const originalWarn = console.warn;
+
+    beforeEach(() => {
+        console.warn = jest.fn();
     });
+
+    afterAll(() => {
+        console.warn = originalWarn;
+    });
+    
     it("addPage saves a page for rendering", () => {
-        const pageRenderer = new PageRenderer({"asd": "asd", "/404": "/404"});
+        const pageRenderer = new PageRenderer(Routes["/form"]);
         pageRenderer.addPage("/asd", {} as React.ReactElement);
-        expect(() => {pageRenderer.renderPage("asd")}).not.toThrow();
+        expect(() => {pageRenderer.renderPage("/form")}).not.toThrow();
     });
-    it("renderPage returns 404 page if page is not registered", () => {
-        const pageRenderer = new PageRenderer({"asd": "asd", "/404": "/404"});
+    it("renderPage returns default page if it is registered", () => {
+        const pageRenderer = new PageRenderer(Routes["/form"]);
         const spy = jest.spyOn(console, "warn");
-        pageRenderer.addPage("/404", {} as React.ReactElement);
-        expect(pageRenderer.renderPage("asd")).not.toBeUndefined();
-        expect(spy).toHaveBeenCalled();
-    });
-    it("renderPage returns page if it is registered", () => {
-        const pageRenderer = new PageRenderer({"asd": "asd", "/404": "/404"});
-        const spy = jest.spyOn(console, "warn");
+        expect(pageRenderer.renderPage("asd")).toBeUndefined();
+        expect(spy).toHaveBeenCalledTimes(1);
         pageRenderer.addPage("asd", {} as React.ReactElement);
         expect(pageRenderer.renderPage("asd")).not.toBeUndefined();
-        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 })

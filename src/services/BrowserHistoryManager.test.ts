@@ -27,6 +27,16 @@ describe("BrowserHistoryManager", () => {
             instance: new BrowserHistoryManager(historyOverride || history)
         };
     }
+    const originalLog = console.log;
+
+    beforeEach(() => {
+        console.log = jest.fn();
+    });
+
+    afterAll(() => {
+        console.log = originalLog;
+    });
+
     it("push works as expected", () => {
         const spy = jest.spyOn(console, "log");
         const { instance, history } = getInstance(undefined);
