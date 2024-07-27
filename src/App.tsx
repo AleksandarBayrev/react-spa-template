@@ -8,7 +8,6 @@ import { AppLogo } from "./ui";
 import { AppContext } from "./AppContext";
 import { isValidContext } from "./base";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { RouteDefinition } from "./types";
 
 @observer
 export class App extends React.Component {
