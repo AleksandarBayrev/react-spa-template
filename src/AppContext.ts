@@ -1,8 +1,10 @@
 import React from "react";
 import { DependencyInjection } from "./base";
 
-export type AppContext = {
+type AppContextProps = {
     dependencyInjection: DependencyInjection;
 };
 
-export const AppContext = React.createContext<AppContext>(undefined as any as AppContext);
+export type AppContext = React.ContextType<React.Context<AppContextProps>>;
+
+export const AppContext = React.createContext<AppContext | undefined>(undefined);
