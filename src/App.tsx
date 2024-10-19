@@ -1,13 +1,14 @@
 import React from "react";
-import "./App.css";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
+
+import "./App.css";
 import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer, IRoutesProvider } from "./interfaces";
 import { Routes as RoutesConstants } from "./constants";
 import { Menu } from "./navigation";
 import { AppLogo } from "./ui";
 import { AppContext } from "./AppContext";
-import { isValidContext } from "./base";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { getContext } from "./base";
 
 @observer
 export class App extends React.Component {
@@ -16,10 +17,7 @@ export class App extends React.Component {
     }
 
     private get appContext(): AppContext {
-        if (!isValidContext(this.context)) {
-            throw new Error("AppContext not provided!");
-        }
-        return this.context;
+        return getContext(this.context);
     }
 
     private get store(): IAppStore {

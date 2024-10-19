@@ -1,16 +1,13 @@
 import React from "react";
 import { IAppStore, IUrlParser } from "../../interfaces";
 import { observer } from "mobx-react";
-import { BasePage, isValidContext } from "../../base";
+import { BasePage, getContext } from "../../base";
 import { AppContext } from "../../AppContext";
 
 @observer
 export class PageNotFound extends BasePage {
     private get appContext(): AppContext {
-        if (!isValidContext(this.context)) {
-            throw new Error("AppContext not provided!");
-        }
-        return this.context;
+        return getContext(this.context);
     }
 
     private get store(): IAppStore {
