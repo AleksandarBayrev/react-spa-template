@@ -1,8 +1,8 @@
 import React from "react";
-import { IAppStore, IUrlParser } from "../../interfaces";
+import { IAppStore, IUrlParser } from "@app-interfaces";
 import { observer } from "mobx-react";
-import { BasePage, getContext } from "../../base";
-import { AppContext } from "../../AppContext";
+import { BasePage, getContext } from "@app-base";
+import { AppContext } from "@app-context";
 
 @observer
 export class PageNotFound extends BasePage {

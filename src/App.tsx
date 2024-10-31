@@ -3,12 +3,12 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 
 import "./App.css";
-import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer, IRoutesProvider } from "./interfaces";
-import { Routes as RoutesConstants } from "./constants";
-import { Menu } from "./navigation";
-import { AppLogo } from "./ui";
-import { AppContext } from "./AppContext";
-import { getContext } from "./base";
+import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer, IRoutesProvider } from "@app-interfaces";
+import { Routes as RoutesConstants } from "@app-constants";
+import { Menu } from "@app-navigation";
+import { AppLogo } from "@app-ui";
+import { AppContext } from "@app-context";
+import { getContext } from "@app-base";
 
 @observer
 export class App extends React.Component {
@@ -39,7 +39,9 @@ export class App extends React.Component {
     async componentDidMount() {
         await this.store.load();
         this.browserHistoryManager.listen("onPageChange", (update) => {
+            console.log(update);
             this.store.setCurrentPage(this.browserHistoryManager.pathOnly);
+            this.store.updateCurrentFullUrl();
         });
     }
 

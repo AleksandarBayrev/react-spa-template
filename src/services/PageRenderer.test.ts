@@ -1,4 +1,4 @@
-import { Routes } from "../constants";
+import { Routes } from "@app-constants";
 import { PageRenderer } from "./PageRenderer"
 
 describe("PageRenderer", () => {

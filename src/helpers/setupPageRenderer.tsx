@@ -1,8 +1,8 @@
 import React from "react";
-import { DependencyInjection } from "../base";
-import { IPageRenderer } from "../interfaces";
-import { HomePage, AboutPage, PageNotFound, FormPage } from "../pages";
-import { Routes } from "../constants";
+import { DependencyInjection } from "@app-base";
+import { IPageRenderer } from "@app-interfaces";
+import { HomePage, AboutPage, PageNotFound, FormPage } from "@app-pages";
+import { Routes } from "@app-constants";
 
 export const setupPageRenderer = () => {
     const pageRenderer = DependencyInjection.getInstance().getService<IPageRenderer>("IPageRenderer");

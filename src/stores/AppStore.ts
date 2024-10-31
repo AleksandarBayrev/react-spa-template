@@ -1,6 +1,6 @@
 import { IObservableValue, observable, runInAction } from "mobx";
-import { IAppStore, IBrowserHistoryManager } from "../interfaces";
-import { enhanceClass } from "../base";
+import { IAppStore, IBrowserHistoryManager } from "@app-interfaces";
+import { enhanceClass } from "@app-base";
 
 export class AppStore implements IAppStore {
     private readonly browserHistoryManager: IBrowserHistoryManager;

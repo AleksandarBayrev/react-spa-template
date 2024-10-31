@@ -1,13 +1,12 @@
 import React from "react";
-import { IBrowserHistoryManager, IFormStore, IMessageBus, IPageRenderer, IUrlParser, IFormPageObserverStorage, IRoutesProvider } from "../interfaces";
-import { BrowserHistoryManager, MessageBus, PageRenderer, UrlParser, FormPageObserverStorage, RoutesProvider } from "../services";
-import { IAppStore } from "../interfaces";
-import { AppStore, FormStore } from "../stores";
-import { DependencyInjection } from "../base";
+import { createBrowserHistory } from "history";
+import { IBrowserHistoryManager, IFormStore, IMessageBus, IPageRenderer, IUrlParser, IFormPageObserverStorage, IRoutesProvider, IAppStore } from "@app-interfaces";
+import { BrowserHistoryManager, MessageBus, PageRenderer, UrlParser, FormPageObserverStorage, RoutesProvider } from "@app-services";
+import { AppStore, FormStore } from "@app-stores";
+import { DependencyInjection } from "@app-base";
+import { Routes as RoutesConstants } from "@app-constants";
 import { setupPageRenderer } from "./setupPageRenderer";
 import { setupMessageBus } from "./setupMessageBus";
-import { createBrowserHistory } from "history";
-import { Routes as RoutesConstants } from "../constants";
 
 export const setupDependencyInjection = async () => {
     DependencyInjection.setupInstance(console.log, false);

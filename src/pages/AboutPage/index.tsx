@@ -1,8 +1,8 @@
 import React from "react";
-import { IAppStore } from "../../interfaces";
-import { BasePage, getContext } from "../../base";
+import { IAppStore } from "@app-interfaces";
+import { BasePage, getContext } from "@app-base";
 import { observer } from "mobx-react";
-import { AppContext } from "../../AppContext";
+import { AppContext } from "@app-context";
 
 @observer
 export class AboutPage extends BasePage {

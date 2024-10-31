@@ -1,4 +1,4 @@
-import { IUrlParser } from "../interfaces";
+import { IUrlParser } from "@app-interfaces";
 import { UrlParser } from "./UrlParser";
 
 describe("UrlParser", () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "./Link";
-import { LinkConfiguration } from "../types";
+import { LinkConfiguration } from "@app-types";
 
 export class Menu extends React.Component {
     private readonly links: LinkConfiguration[] = [

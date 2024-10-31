@@ -1,5 +1,5 @@
 import { Lambda } from "mobx";
-import { IObserverStorage } from "../interfaces";
+import { IObserverStorage } from "@app-interfaces";
 
 export abstract class ObserverStorage implements IObserverStorage {
     private readonly observers: Map<string, Lambda> = new Map();

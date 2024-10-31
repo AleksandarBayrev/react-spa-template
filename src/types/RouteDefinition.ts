@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes as RoutesConstants } from "../constants";
+import { Routes as RoutesConstants } from "@app-constants";
 
 export type RouteDefinition = {
     path: RoutesConstants;

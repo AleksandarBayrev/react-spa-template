@@ -1,5 +1,5 @@
-import { AppContext } from "../../AppContext";
-import { isValidContext } from "./isValidContext";
+import { AppContext } from "@app-context";
+import { isValidContext } from "@app-base/helpers/isValidContext";
 
 export const getContext = (context: unknown | undefined): AppContext => {
     if (!isValidContext(context)) {

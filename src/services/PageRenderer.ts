@@ -1,7 +1,7 @@
 import { ReactElement, JSXElementConstructor } from "react";
-import { IPageRenderer } from "../interfaces";
-import { enhanceClass } from "../base";
-import { Routes } from "../constants";
+import { IPageRenderer } from "@app-interfaces";
+import { enhanceClass } from "@app-base";
+import { Routes } from "@app-constants";
 
 export class PageRenderer implements IPageRenderer {
     private readonly pageMaps: Map<string, React.ReactElement>;

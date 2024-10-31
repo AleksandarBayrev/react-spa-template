@@ -1,6 +1,6 @@
-import { enhanceClass } from "../base";
-import { IRoutesProvider } from "../interfaces";
-import { Routes as RoutesConstants } from "../constants";
+import { enhanceClass } from "@app-base";
+import { IRoutesProvider } from "@app-interfaces";
+import { Routes as RoutesConstants } from "@app-constants";
 
 export class RoutesProvider implements IRoutesProvider {
     private readonly _routes: RoutesConstants[];

@@ -1,5 +1,5 @@
-import { enhanceClass } from "../base";
-import { IMessageBus, Message, MessageBusCallback } from "../interfaces";
+import { enhanceClass } from "@app-base";
+import { IMessageBus, Message, MessageBusCallback } from "@app-interfaces";
 
 export class MessageBus implements IMessageBus {
     private readonly subscriptions: Map<string, MessageBusCallback<any>[]>;

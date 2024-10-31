@@ -1,4 +1,4 @@
-import { BasePage } from "./BasePage";
+import { BasePage } from "@app-base/BasePage";
 
 describe("BasePage", () => {
     it("is a class", () => {

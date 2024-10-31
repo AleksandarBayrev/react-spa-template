@@ -1,5 +1,5 @@
-import { AppContext } from "../../AppContext";
-import { DependencyInjection } from "../DependencyInjection";
+import { AppContext } from "@app-context";
+import { DependencyInjection } from "@app-base/DependencyInjection";
 
 export const isValidContext = (context: any): context is AppContext => {
     const contextChecks: boolean[] = [

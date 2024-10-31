@@ -1,8 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { DependencyInjection } from "../base";
-import { IAppStore } from "../interfaces";
 import { NavLink } from "react-router-dom";
+import { DependencyInjection } from "@app-base";
+import { IAppStore } from "@app-interfaces";
 import "./Link.css";
 
 type LinkProps = {

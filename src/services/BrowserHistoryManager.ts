@@ -1,7 +1,7 @@
 import { BrowserHistory, Listener } from "history";
-import { IBrowserHistoryManager } from "../interfaces";
-import { enhanceClass } from "../base";
-import { BrowserHistoryManagerListener } from "../types";
+import { IBrowserHistoryManager } from "@app-interfaces";
+import { enhanceClass } from "@app-base";
+import { BrowserHistoryManagerListener } from "@app-types";
 
 export class BrowserHistoryManager implements IBrowserHistoryManager {
     private readonly listeners: Map<string, BrowserHistoryManagerListener>;

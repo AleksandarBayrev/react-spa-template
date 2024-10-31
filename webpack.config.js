@@ -59,6 +59,18 @@ const config = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.css', '.js', '.jsx'],
+        alias: {
+            '@app-constants': path.join(__dirname, 'src', 'constants'),
+            '@app-pages': path.join(__dirname, 'src', 'pages'),
+            '@app-base': path.join(__dirname, 'src', 'base'),
+            '@app-context': path.join(__dirname, 'src', 'AppContext'),
+            '@app-services': path.join(__dirname, 'src', 'services'),
+            '@app-ui': path.join(__dirname, 'src', 'ui'),
+            '@app-navigation': path.join(__dirname, 'src', 'navigation'),
+            '@app-resources': path.join(__dirname, 'src', 'resources'),
+            '@app-helpers': path.join(__dirname, 'src', 'helpers'),
+            '@app-stores': path.join(__dirname, 'src', 'stores'),
+        }
     }
 };
 

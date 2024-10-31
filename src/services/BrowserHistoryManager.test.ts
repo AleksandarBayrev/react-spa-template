@@ -1,5 +1,5 @@
 import { Action, BrowserHistory } from "history";
-import { IBrowserHistoryManager } from "../interfaces";
+import { IBrowserHistoryManager } from "@app-interfaces";
 import { BrowserHistoryManager } from "./BrowserHistoryManager";
 
 describe("BrowserHistoryManager", () => {

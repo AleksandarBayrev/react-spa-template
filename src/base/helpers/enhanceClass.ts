@@ -1,4 +1,4 @@
-import { DIClassDefinition } from "../types";
+import { DIClassDefinition } from "@app-base/types";
 
 export type EnhancedClass<T> = DIClassDefinition<T> & {
     className: string;

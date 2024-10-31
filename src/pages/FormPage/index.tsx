@@ -30,10 +30,12 @@ export class FormPage extends BasePage {
     async componentDidMount(): Promise<void> {
         await this.formStore.load();
         this.observers.trySet("nameObserver", observe(this.formStore.name, (change) => {
+            console.log(change);
             this.formStore.updateUrl();
         }));
         this.browserHistoryManager.listen("onNameChange", (update) => {
             console.log(update);
+            this.formStore.updateUrl();
         });
     }
 

@@ -1,6 +1,6 @@
-import { DependencyInjection } from "./DependencyInjection";
-import { enhanceClass } from "./helpers";
-import { AvailableServices } from "./types";
+import { DependencyInjection } from "@app-base/DependencyInjection";
+import { enhanceClass } from "@app-base/helpers";
+import { AvailableServices } from "@app-base/types";
 
 describe("DependencyInjection", () => {
     beforeEach(() => {

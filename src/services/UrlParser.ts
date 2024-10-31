@@ -1,5 +1,5 @@
-import { enhanceClass } from "../base";
-import { IUrlParser } from "../interfaces";
+import { enhanceClass } from "@app-base";
+import { IUrlParser } from "@app-interfaces";
 
 export class UrlParser implements IUrlParser {
     parseUrl(url: URL): string {
