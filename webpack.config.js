@@ -7,6 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
+const getMode = (isProduction) => isProduction ? 'production' : 'development';
+
 const config = {
     entry: ['./src/index.tsx'],
     target: 'web',
@@ -22,10 +24,11 @@ const config = {
             deadCodeInjection: true,
             deadCodeInjectionThreshold: 1,
             debugProtection: true,
-            identifierNamesGenerator: 'hexadecimal',
+            identifierNamesGenerator: 'mangled',
             selfDefending: true,
             splitStrings: true,
             splitStringsChunkLength: 2,
+            stringArray: true,
             stringArrayEncoding: ['rc4'],
             target: 'browser',
             unicodeEscapeSequence: true
@@ -75,12 +78,6 @@ const config = {
 };
 
 module.exports = () => {
-    if (isProduction) {
-        config.mode = 'production';
-
-
-    } else {
-        config.mode = 'development';
-    }
+    config.mode = getMode(isProduction);
     return config;
 };
