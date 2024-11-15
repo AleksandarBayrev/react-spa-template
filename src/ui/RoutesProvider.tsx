@@ -12,7 +12,7 @@ export class RoutesProvider extends React.Component {
         return (
             <Routes>
                 <Route key={"home-page"} path="/" element={<HomePage />} errorElement={<SomethingWentWrongPage />} />
-                <Route key={"about-page"} path="/" element={<AboutPage />} errorElement={<SomethingWentWrongPage />} />
+                <Route key={"about-page"} path="/about" element={<AboutPage />} errorElement={<SomethingWentWrongPage />} />
                 <Route key={"not-found-page"} path="*" element={<PageNotFound />} errorElement={<SomethingWentWrongPage />} />
             </Routes>
         )

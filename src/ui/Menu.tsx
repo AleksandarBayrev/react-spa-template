@@ -12,6 +12,10 @@ export class Menu extends React.Component {
         {
             to: "/about",
             title: "About"
+        },
+        {
+            to: "/missing-page",
+            title: "Missing page"
         }
     ];
 
