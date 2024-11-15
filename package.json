@@ -9,7 +9,8 @@
     "clear:dist": "shx rm -rf ./dist",
     "clear:build": "shx rm -rf ./build",
     "build": "npm run clear:dist && webpack --mode=production --node-env=production && shx cp index.prod.html ./dist/index.html",
-    "build:dev": "npm run clear:dist && webpack --mode=development && shx cp index.dev.html ./dist/index.html"
+    "build:dev": "npm run clear:dist && webpack --mode=development && shx cp index.dev.html ./dist/index.html",
+    "start:dev": "npm run build:dev && http-server ./dist"
   },
   "repository": {
     "type": "git",
