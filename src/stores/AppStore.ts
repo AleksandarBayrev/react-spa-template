@@ -1,11 +1,15 @@
 import { enhanceClass } from "@app-root/base";
 import { IAppStore, IConfigurationFetcher } from "@app-root/interfaces";
 import { AppConfiguration } from "@app-root/types";
-import { computed, observable, runInAction } from "mobx";
+import { computed, IObservableValue, observable, runInAction } from "mobx";
 
 export class AppStore implements IAppStore {
+
     @observable
-    private appConfig: AppConfiguration = observable<AppConfiguration>({
+    private _appLoaded: IObservableValue<boolean> = observable.box(false);
+
+    @observable
+    private _appConfig: AppConfiguration = observable<AppConfiguration>({
         appName: ""
     });
 
@@ -15,16 +19,17 @@ export class AppStore implements IAppStore {
 
     load(): Promise<void> {
         return new Promise((res, rej) => {
-            this.reloadInterval = setInterval(() => {
-                runInAction(async () => {
-                    try {
-                        const { appName } = await this.configurationFetcher.getConfiguration();
-                        this.appConfig.appName = appName;
-                        res();
-                    } catch (err) {
-                        rej(err);
-                    }
-                });
+            this.reloadInterval = setInterval(async () => {
+                try {
+                    const { appName } = await this.configurationFetcher.getConfiguration();
+                    runInAction(() => {
+                        this._appConfig.appName = appName;
+                        this._appLoaded.set(true);
+                    });
+                    res();
+                } catch (err) {
+                    rej(err);
+                }
             }, 500);
         });
     }
@@ -40,7 +45,12 @@ export class AppStore implements IAppStore {
 
     @computed
     get appName(): string {
-        return this.appConfig.appName;
+        return this._appConfig.appName;
+    }
+
+    @computed
+    get appLoaded(): boolean {
+        return this._appLoaded.get();
     }
 }
 

@@ -10,8 +10,6 @@ export type DIClassDefinition<T> = new (...params: any[]) => T;
 export type AvailableServices = 
 "ILoggerManager"
 |
-"IAppContextValidator"
-|
 "IConfigurationFetcher"
 |
 "IAppStore";

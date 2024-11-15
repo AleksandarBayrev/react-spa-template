@@ -5,7 +5,7 @@ React Single Page Application template with routing
 * It aims for an in-house implementation of SPA with control over most of the stuff happening behind the scenes (routing/state management/etc).
 
 ## What is included?
-* Custom routing solution with React Router DOM/MobX/History API
+* Routing with React Router DOM
 * State management with MobX
 * UI composition with React/CSS
 * Webpack to bundle the project
