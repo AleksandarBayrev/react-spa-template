@@ -32,28 +32,6 @@
     "paths": {
       "@app-root": ["./src"],
       "@app-root/*": ["./src/*"],
-      "@app-base": ["./src/base"],
-      "@app-base/*": ["./src/base/*"],
-      "@app-helpers": ["./src/helpers"],
-      "@app-helpers/*": ["./src/helpers/*"],
-      "@app-interfaces": ["./src/interfaces"],
-      "@app-interfaces/*": ["./src/interfaces/*"],
-      "@app-navigation": ["./src/navigation"],
-      "@app-navigation/*": ["./src/navigation/*"],
-      "@app-pages": ["./src/pages"],
-      "@app-pages/*": ["./src/pages/*"],
-      "@app-resources": ["./src/resources"],
-      "@app-resources/*": ["./src/resources/*"],
-      "@app-services": ["./src/services"],
-      "@app-services/*": ["./src/services/*"],
-      "@app-stores": ["./src/stores"],
-      "@app-stores/*": ["./src/stores/*"],
-      "@app-types": ["./src/types"],
-      "@app-types/*": ["./src/types/*"],
-      "@app-ui": ["./src/ui"],
-      "@app-ui/*": ["./src/ui/*"],
-      "@app-context": ["./src/AppContext.ts"],
-      "@app-constants": ["./src/constants.ts"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": ["./src"],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

@@ -1,9 +1,9 @@
-import { enhanceClass } from "./enhanceClass"
+import { enhanceClass } from "./enhanceClass";
 
 describe("enhanceClass", () => {
-    it("enhances class correctly", () => {
-        class MyClass {}
+    it("maps className to a class", () => {
+        class MyClass {};
         enhanceClass(MyClass, "MyClass");
-        expect((MyClass as any)["className"]).toBe("MyClass")
-    })
-})
+        expect((MyClass as any)["className"]).toBe("MyClass");
+    });
+});

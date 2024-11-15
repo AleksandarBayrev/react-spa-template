@@ -1,44 +1,47 @@
-import { IObservableValue, observable, runInAction } from "mobx";
-import { IAppStore, IBrowserHistoryManager } from "@app-interfaces";
-import { enhanceClass } from "@app-base";
+import { enhanceClass } from "@app-root/base";
+import { IAppStore, IConfigurationFetcher } from "@app-root/interfaces";
+import { AppConfiguration } from "@app-root/types";
+import { computed, observable, runInAction } from "mobx";
 
 export class AppStore implements IAppStore {
-    private readonly browserHistoryManager: IBrowserHistoryManager;
-    //#region Public properties
     @observable
-    currentPage: IObservableValue<string>;
+    private appConfig: AppConfiguration = observable<AppConfiguration>({
+        appName: ""
+    });
 
-    @observable
-    currentFullUrl: IObservableValue<string>;
-    //#endregion
+    private reloadInterval: NodeJS.Timeout | null = null;
 
-    constructor(browserHistoryManager: IBrowserHistoryManager) {
-        this.browserHistoryManager = browserHistoryManager;
-        const url = new URL(this.browserHistoryManager.currentUrl);
-        this.currentPage = observable.box(this.browserHistoryManager.pathAndQuery);
-        this.currentFullUrl = observable.box(url.toString());
-    }
+    constructor(private readonly configurationFetcher: IConfigurationFetcher) {}
 
-    //#region Base methods
-    async load(): Promise<void> {
-    }
-    async unload(): Promise<void> {
-    }
-    //#endregion
-
-    //#region Actions
-    setCurrentPage = (page: string) => {
-        runInAction(() => {
-            this.currentPage.set(page);
+    load(): Promise<void> {
+        return new Promise((res, rej) => {
+            this.reloadInterval = setInterval(() => {
+                runInAction(async () => {
+                    try {
+                        const { appName } = await this.configurationFetcher.getConfiguration();
+                        this.appConfig.appName = appName;
+                        res();
+                    } catch (err) {
+                        rej(err);
+                    }
+                });
+            }, 500);
         });
     }
-    updateCurrentFullUrl = (): void => {
-        runInAction(() => {
-            const url = new URL(this.browserHistoryManager.currentUrl);
-            this.currentFullUrl.set(url.toString());
+
+    unload(): Promise<void> {
+        return new Promise((res, rej) => {
+            if (this.reloadInterval) {
+                clearInterval(this.reloadInterval);
+            }
+            res();
         });
     }
-    //#endregion
+
+    @computed
+    get appName(): string {
+        return this.appConfig.appName;
+    }
 }
 
 enhanceClass(AppStore, "AppStore");

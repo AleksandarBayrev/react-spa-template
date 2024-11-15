@@ -1,78 +1,49 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { observer } from "mobx-react";
-
-import "./App.css";
-import { IAppStore, IBrowserHistoryManager, IMessageBus, IPageRenderer, IRoutesProvider } from "@app-interfaces";
-import { Routes as RoutesConstants } from "@app-constants";
-import { Menu } from "@app-navigation";
-import { AppLogo } from "@app-ui";
-import { AppContext } from "@app-context";
-import { getContext } from "@app-base";
+import { AppContext } from "@app-root/AppContext";
+import { Menu } from "@app-root/ui";
+import AppLogo from "@app-root/resources/spa-logo.png";
+import { AboutPage, HomePage } from "@app-root/pages";
+import { PageNotFound, SomethingWentWrongPage } from "@app-root/base/pages";
+import { IAppStore } from "@app-root/interfaces";
 
 @observer
 export class App extends React.Component {
-    private get routes(): RoutesConstants[] {
-        return [...this.appContext.dependencyInjection.getService<IRoutesProvider>("IRoutesProvider").routes];
+
+    context!: AppContext;
+
+    private get appStore(): IAppStore {
+        return this.context.DependencyInjection.getService("IAppStore");
     }
 
-    private get appContext(): AppContext {
-        return getContext(this.context);
+    async componentDidMount(): Promise<void> {
+        await this.appStore.load();
     }
 
-    private get store(): IAppStore {
-        return this.appContext.dependencyInjection.getService<IAppStore>("IAppStore");
-    }
-
-    private get pageRenderer(): IPageRenderer {
-        return this.appContext.dependencyInjection.getService<IPageRenderer>("IPageRenderer");
-    }
-
-    private get messageBus(): IMessageBus {
-        return this.appContext.dependencyInjection.getService<IMessageBus>("IMessageBus");
-    };
-
-    private get browserHistoryManager(): IBrowserHistoryManager {
-        return this.appContext.dependencyInjection.getService<IBrowserHistoryManager>("IBrowserHistoryManager");
-    };
-
-    async componentDidMount() {
-        await this.store.load();
-        this.browserHistoryManager.listen("onPageChange", (update) => {
-            console.log(update);
-            this.store.setCurrentPage(this.browserHistoryManager.pathOnly);
-            this.store.updateCurrentFullUrl();
-        });
-    }
-
-    async componentWillUnmount() {
-        await this.store.unload();
-        this.browserHistoryManager.unlisten("onPageChange");
-    }
-
-    private renderRoutes = () => {
-        return <Routes>
-            {this.routes.map(path => <Route key={path} path={path} element={this.pageRenderer.renderPage(path)} />)}
-            <Route key="404-page" path="*" element={this.pageRenderer.renderPage(RoutesConstants["/404"])} />
-        </Routes>
-    }
-
-    render() {
+    render(): React.ReactNode {
         return (
-            <BrowserRouter>
-                <div className="app-container">
-                    <div className="app-logo-container">
-                        <AppLogo />
+            <div className="app-wrapper">
+                <BrowserRouter>
+                    <div className="app-logo">
+                        <img src={AppLogo} />
                     </div>
-                    <div className="app-menu-container">
+                    <div className="app-name">
+                        {this.appStore.appName}
+                    </div>
+                    <div className="menu-wrapper">
                         <Menu />
                     </div>
-                    <div className="app-page-wrapper">
-                        {this.renderRoutes()}
+                    <div className="page-wrapper">
+                        <Routes>
+                            <Route key={"home-page"} path="/" element={<HomePage />} errorElement={<SomethingWentWrongPage />} />
+                            <Route key={"about-page"} path="/" element={<AboutPage />} errorElement={<SomethingWentWrongPage />} />
+                            <Route key={"not-found-page"} path="*" element={<PageNotFound />} errorElement={<SomethingWentWrongPage />} />
+                        </Routes>
                     </div>
-                </div>
-            </BrowserRouter>
-        );
+                </BrowserRouter>
+            </div>
+        )
     }
 }
 

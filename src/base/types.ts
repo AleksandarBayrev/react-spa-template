@@ -7,11 +7,11 @@ export type ServiceDescription = {
 }
 
 export type DIClassDefinition<T> = new (...params: any[]) => T;
-export type AvailableServices = "IMessageBus"
-    | "IUrlParser"
-    | "IAppStore"
-    | "IFormStore"
-    | "IPageRenderer"
-    | "IBrowserHistoryManager"
-    | "IFormPageObserverStorage"
-    | "IRoutesProvider";
+export type AvailableServices = 
+"ILoggerManager"
+|
+"IAppContextValidator"
+|
+"IConfigurationFetcher"
+|
+"IAppStore";

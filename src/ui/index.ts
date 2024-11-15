@@ -1,1 +1,1 @@
-export * from "./AppLogo";
+export * from "./Menu";
