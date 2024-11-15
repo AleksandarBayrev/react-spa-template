@@ -8,6 +8,7 @@ app.use("/static", express.static(path.join(__dirname, "static")));
 
 app.get([
     "/",
+    "/home/:id",
     "/about"
 ], async (req, res, next) => {
     return res.contentType("text/html").send(await fs.readFile(htmlPath));

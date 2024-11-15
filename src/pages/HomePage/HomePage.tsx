@@ -1,10 +1,16 @@
 import React from "react";
-import { BasePage } from "@app-root/base";
+import { useLocation, useParams } from "react-router-dom";
 
-export class HomePage extends BasePage {
-    render(): React.ReactNode {
-        return (
-            <div>Home Page</div>
-        )
-    }
+
+export const HomePage = () => {
+    const params = useParams();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const searchParamsArray = [...searchParams.entries()];
+    return (
+        <div>Home Page
+            {searchParamsArray.length ? <div>, search params: {JSON.stringify(searchParamsArray)}</div> : ""}
+            {Object.keys(params).length ? <div>, path params: {JSON.stringify(params)}</div> : ""}
+        </div>
+    );
 }

@@ -18,6 +18,9 @@ export class AppStore implements IAppStore {
     constructor(private readonly configurationFetcher: IConfigurationFetcher) {}
 
     load(): Promise<void> {
+        if (this.reloadInterval) {
+            return Promise.resolve();
+        }
         return new Promise((res, rej) => {
             this.reloadInterval = setInterval(async () => {
                 try {
