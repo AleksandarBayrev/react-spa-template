@@ -1,11 +1,9 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import { AppContext } from "@app-root/AppContext";
-import { Menu } from "@app-root/ui";
+import { Menu, RoutesProvider } from "@app-root/ui";
 import AppLogo from "@app-root/resources/spa-logo.png";
-import { AboutPage, HomePage } from "@app-root/pages";
-import { PageNotFound, SomethingWentWrongPage } from "@app-root/base/pages";
 import { IAppStore } from "@app-root/interfaces";
 import { AppContextProvider } from "@app-root/base";
 
@@ -39,11 +37,7 @@ export class App extends React.Component {
                             <Menu />
                         </div>
                         <div className="page-wrapper">
-                            <Routes>
-                                <Route key={"home-page"} path="/" element={<HomePage />} errorElement={<SomethingWentWrongPage />} />
-                                <Route key={"about-page"} path="/" element={<AboutPage />} errorElement={<SomethingWentWrongPage />} />
-                                <Route key={"not-found-page"} path="*" element={<PageNotFound />} errorElement={<SomethingWentWrongPage />} />
-                            </Routes>
+                            <RoutesProvider />
                         </div>
                     </BrowserRouter>
                     :
