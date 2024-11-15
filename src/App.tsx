@@ -9,6 +9,8 @@ import { PageNotFound, SomethingWentWrongPage } from "@app-root/base/pages";
 import { IAppStore } from "@app-root/interfaces";
 import { AppContextProvider } from "@app-root/base";
 
+import "./App.css";
+
 @observer
 export class App extends React.Component {
 

@@ -10,7 +10,7 @@
     "clear:build": "shx rm -rf ./build",
     "build": "npm run clear:dist && webpack --mode=production --node-env=production && shx cp index.prod.html ./dist/index.html",
     "build:dev": "npm run clear:dist && webpack --mode=development && shx cp index.dev.html ./dist/index.html",
-    "start:dev": "npm run build:dev && http-server ./dist"
+    "start:dev": "npm run build:dev && shx cp ./devServer.js ./dist && cd ./dist && node ./devServer.js"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "@types/uuid": "^10.0.0",
     "@webpack-cli/generators": "^3.0.7",
     "css-loader": "^6.8.1",
-    "http-server": "^14.1.1",
+    "express": "^4.21.1",
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
