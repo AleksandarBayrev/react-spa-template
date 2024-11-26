@@ -1,8 +1,9 @@
+import { observer } from "mobx-react";
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 
-export const HomePage = () => {
+export const HomePage = observer(() => {
     const params = useParams();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -13,4 +14,4 @@ export const HomePage = () => {
             {Object.keys(params).length ? <div>, path params: {JSON.stringify(params)}</div> : ""}
         </div>
     );
-}
+});
