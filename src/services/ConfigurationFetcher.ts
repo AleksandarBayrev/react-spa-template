@@ -4,7 +4,7 @@ import { AppConfiguration } from "@app-root/types";
 
 export class ConfigurationFetcher implements IConfigurationFetcher {
     private count: number = 0;
-    getConfiguration(): Promise<AppConfiguration> {
+    getConfiguration = (): Promise<AppConfiguration> => {
         if (this.count === 100) {
             this.count = 0;
         }

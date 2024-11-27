@@ -9,17 +9,19 @@ export class LoggerManager implements ILoggerManager {
         this.loggers = new Map();
     }
 
-    addLogger(name: string): void {
+    addLogger = (name: string): void => {
         this.loggers.set(name, new Logger(name));
     }
-    getLogger(name: string): ILogger {
+    
+    getLogger = (name: string): ILogger => {
         const logger = this.loggers.get(name);
         if (!logger) {
             throw new Error(`Logger with name ${name} not registered!`)
         }
         return logger;
     }
-    removeLogger(name: string): boolean {
+
+    removeLogger = (name: string): boolean => {
         return this.loggers.delete(name);
     }
 

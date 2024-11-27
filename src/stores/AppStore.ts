@@ -17,7 +17,7 @@ export class AppStore implements IAppStore {
 
     constructor(private readonly configurationFetcher: IConfigurationFetcher) {}
 
-    load(): Promise<void> {
+    load = (): Promise<void> => {
         if (this.reloadInterval) {
             return Promise.resolve();
         }
@@ -37,7 +37,7 @@ export class AppStore implements IAppStore {
         });
     }
 
-    unload(): Promise<void> {
+    unload = (): Promise<void> => {
         return new Promise((res, rej) => {
             if (this.reloadInterval) {
                 clearInterval(this.reloadInterval);

@@ -4,7 +4,7 @@ import { ILogger } from "@app-root/interfaces";
 export class Logger implements ILogger {
     constructor(private readonly loggerContext: string) {}
 
-    info(message: string): Promise<void> {
+    info = (message: string): Promise<void> => {
         return new Promise((res) => {
             setTimeout(() => {
                 console.log(this.getMessage(message));
@@ -13,7 +13,7 @@ export class Logger implements ILogger {
         });
     }
 
-    warn(message: string): Promise<void> {
+    warn = (message: string): Promise<void> => {
         return new Promise((res) => {
             setTimeout(() => {
                 console.warn(this.getMessage(message));
@@ -22,7 +22,7 @@ export class Logger implements ILogger {
         });
     }
 
-    error(message: string): Promise<void> {
+    error = (message: string): Promise<void> => {
         return new Promise((res) => {
             setTimeout(() => {
                 console.error(this.getMessage(message));
@@ -31,7 +31,7 @@ export class Logger implements ILogger {
         });
     }
 
-    private getMessage(message: string) {
+    private getMessage = (message: string) => {
         return `(${this.loggerContext}) [${new Date().toISOString()}] => ${message}`;
     }
 }

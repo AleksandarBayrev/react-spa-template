@@ -13,14 +13,14 @@ export class DependencyInjection {
         this.serviceDescriptors = new Map();
     }
 
-    public static getInstance(): DependencyInjection {
+    public static getInstance = (): DependencyInjection => {
         if (DependencyInjection.instance === null) {
             throw new Error("DependencyInjection container is not set up!");
         }
         return DependencyInjection.instance;
     }
 
-    public static setupInstance(logger: DILogger, logOnGet: boolean) {
+    public static setupInstance = (logger: DILogger, logOnGet: boolean) => {
         logger("Setting up DependencyInjection...");
         if (DependencyInjection.instance !== null) {
             throw new Error("DependencyInjection container is already set up!");
@@ -28,14 +28,14 @@ export class DependencyInjection {
         DependencyInjection.instance = new DependencyInjection(logger, logOnGet);
     }
 
-    public hasService(baseType: AvailableServices): boolean {
+    public hasService = (baseType: AvailableServices): boolean => {
         return this.serviceDescriptors.has(baseType) && this.services.has(baseType);
     }
 
-    public registerService<T>(baseType: AvailableServices,
+    public registerService= <T>(baseType: AvailableServices,
         serviceLifespan: ServiceLifespan,
         classDefinition: DIClassDefinition<T>,
-        constructorParameters: any[]): void {
+        constructorParameters: any[]): void => {
         if (!(classDefinition as EnhancedClass<any>)["className"]) {
             throw new Error(`Class definition for base type ${baseType} not enhanced! Use enhanceClass helper.`);
         }
@@ -52,7 +52,7 @@ export class DependencyInjection {
             new classDefinition(...constructorParameters));
     }
 
-    public getService<T>(baseType: AvailableServices): T {
+    public getService = <T>(baseType: AvailableServices): T => {
         if (!this.serviceDescriptors.has(baseType) || !this.services.has(baseType)) {
             throw new Error(`Base type ${baseType} not registered in DI`);
         }
@@ -72,7 +72,7 @@ export class DependencyInjection {
         return this.services.get(baseType) as T;
     }
 
-    private getMessageForServiceFetching(baseType: AvailableServices, serviceDescription: ServiceDescription) {
+    private getMessageForServiceFetching = (baseType: AvailableServices, serviceDescription: ServiceDescription) => {
         switch (serviceDescription.serviceLifespan) {
             case 'singleton':
                 return `Returning ${serviceDescription.classDefinition.className} class instance with lifespan ${serviceDescription.serviceLifespan} for ${baseType}`;
