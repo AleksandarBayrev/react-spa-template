@@ -1,5 +1,6 @@
 import '@app-styles/App.css';
-document.body.addEventListener("load", () => {
+
+window.addEventListener("DOMContentLoaded", () => {
     const container = document.createElement('div');
     container.classList.add('app-wrapper');
     container.innerHTML = 'Loading website, please wait...';
