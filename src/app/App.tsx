@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import { AppContext } from "@app-root/AppContext";
 import { Menu, RoutesProvider } from "@app-root/ui";
-import AppLogo from "@app-root/resources/spa-logo.png";
+import AppLogo from "@app-resources/spa-logo.png";
 import { IAppStore } from "@app-root/interfaces";
 import { AppContextProvider } from "@app-root/base";
 
