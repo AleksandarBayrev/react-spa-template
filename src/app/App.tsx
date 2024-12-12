@@ -7,7 +7,7 @@ import AppLogo from "@app-root/resources/spa-logo.png";
 import { IAppStore } from "@app-root/interfaces";
 import { AppContextProvider } from "@app-root/base";
 
-import "./App.css";
+import "@app-styles/App.css";
 
 const loadStore = async (appStore: IAppStore) => {
     await appStore.load();

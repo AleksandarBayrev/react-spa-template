@@ -68,6 +68,7 @@ const config = {
         alias: {
             '@app-root': path.join(__dirname, 'src', 'app'),
             '@app-loader': path.join(__dirname, 'src', 'loader'),
+            '@app-styles': path.join(__dirname, 'src', 'styles')
         }
     }
 };

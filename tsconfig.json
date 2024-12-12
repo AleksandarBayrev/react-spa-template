@@ -34,6 +34,8 @@
       "@app-root/*": ["./src/app/*"],
       "@app-loader": ["./src/loader"],
       "@app-loader/*": ["./src/loader/*"],
+      "@app-styles": ["./src/styles"],
+      "@app-styles/*": ["./src/styles/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": ["./src"],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
