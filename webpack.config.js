@@ -56,7 +56,7 @@ const config = {
             },
             {
               test: imagesRegex,
-              type: 'asset',
+              type: 'asset/inline',
             },
         ],
     },
