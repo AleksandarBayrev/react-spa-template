@@ -37,7 +37,7 @@ const config = {
             unicodeEscapeSequence: true
         }),
         new MiniCssExtractPlugin({
-            filename: isProduction ? 'app.bundle.css' : 'app.bundle.dev.css',
+            filename: isProduction ? '[name].bundle.css' : '[name].bundle.dev.css',
         }),
     ],
     module: {
