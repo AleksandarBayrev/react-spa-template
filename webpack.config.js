@@ -10,11 +10,14 @@ const isProduction = process.env.NODE_ENV == 'production';
 const getMode = (isProduction) => isProduction ? 'production' : 'development';
 
 const config = {
-    entry: ['./src/index.tsx'],
+    entry: {
+        app: './src/app/index.tsx',
+        appLoader: './src/loader/index.ts'
+    },
     target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist', 'static'),
-        filename: isProduction ? 'app.bundle.js' : 'app.bundle.dev.js'
+        filename: isProduction ? '[name].bundle.js' : '[name].bundle.dev.js'
     },
     devtool: !isProduction && 'eval-source-map',
     plugins: [
@@ -63,7 +66,8 @@ const config = {
     resolve: {
         extensions: ['.tsx', '.ts', '.css', '.js', '.jsx'],
         alias: {
-            '@app-root': path.join(__dirname, 'src'),
+            '@app-root': path.join(__dirname, 'src', 'app'),
+            '@app-loader': path.join(__dirname, 'src', 'loader'),
         }
     }
 };
