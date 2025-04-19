@@ -1,7 +1,7 @@
 import { enhanceClass } from "@app-root/base";
 import { IAppStore, IConfigurationFetcher } from "@app-root/interfaces";
 import { AppConfiguration } from "@app-root/types";
-import { computed, IObservableValue, observable, runInAction } from "mobx";
+import { computed, IObservableValue, observable, runInAction, action } from "mobx";
 
 export class AppStore implements IAppStore {
 
@@ -25,10 +25,8 @@ export class AppStore implements IAppStore {
             this.reloadInterval = setInterval(async () => {
                 try {
                     const { appName } = await this.configurationFetcher.getConfiguration();
-                    runInAction(() => {
-                        this._appConfig.appName = appName;
-                        this._appLoaded.set(true);
-                    });
+                    this.setAppConfig({appName});
+                    this.setAppLoaded(true);
                     res();
                 } catch (err) {
                     rej(err);
@@ -36,6 +34,16 @@ export class AppStore implements IAppStore {
             }, 500);
         });
     }
+
+    setAppLoaded = action((appLoaded: boolean) => {
+        this._appLoaded.set(appLoaded);
+    });
+
+    setAppConfig = action((appConfig: Partial<AppConfiguration>) => {
+        if (appConfig.appName) {
+            this._appConfig.appName = appConfig.appName;
+        }
+    });
 
     unload = (): Promise<void> => {
         return new Promise((res, rej) => {
